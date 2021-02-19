@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 public class WordDisplay : MonoBehaviour
 {
-    public TextMesh text;
+    public Text text;
 
     public void SetWord(string word)
     {
@@ -19,7 +19,7 @@ public class WordDisplay : MonoBehaviour
 
     public void RemoveWord()
     {
-        DestroyImmediate(gameObject, true);
+        Destroy(gameObject);
     }
 
     // Update is called once per frame

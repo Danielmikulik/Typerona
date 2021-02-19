@@ -14,9 +14,9 @@ GameObject:
   - component: {fileID: 6644801943689760039}
   - component: {fileID: 5440679616352793765}
   - component: {fileID: 3969197688616753516}
-  - component: {fileID: -414421438020160897}
   - component: {fileID: 4488445924061488113}
-  - component: {fileID: 1278274233140027124}
+  - component: {fileID: -3971812806954562812}
+  - component: {fileID: 8390136097028462212}
   m_Layer: 0
   m_Name: Sphere
   m_TagString: Untagged
@@ -135,19 +135,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &-414421438020160897
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6856933295649118101}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8f894a60211c6704c8a1a4a88f11bacd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  word: {fileID: 8909597778457490544, guid: 7c1b255a492c3a141a63e0227f9f5058, type: 3}
 --- !u!222 &4488445924061488113
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -155,8 +142,8 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6856933295649118101}
-  m_CullTransparentMesh: 0
---- !u!114 &1278274233140027124
+  m_CullTransparentMesh: 1
+--- !u!114 &-3971812806954562812
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -190,3 +177,16 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: Paek
+--- !u!114 &8390136097028462212
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6856933295649118101}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7404b1c42db4db740abc7c55f761f008, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  text: {fileID: -3971812806954562812}

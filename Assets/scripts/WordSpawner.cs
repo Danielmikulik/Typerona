@@ -9,8 +9,8 @@ public class WordSpawner : MonoBehaviour
         int y = Random.Range(-3, 3);
         int z = 5;
         GameObject virusObj = Instantiate(VirusBody, new Vector3(x,y,z), Quaternion.identity);
-        VirusWordSpawner spawner = virusObj.GetComponent<VirusWordSpawner>();
-        WordDisplay wordDisplay = spawner.GetWordPrefab().GetComponent<WordDisplay>();
+        //VirusWordSpawner spawner = virusObj.GetComponent<VirusWordSpawner>();
+        WordDisplay wordDisplay = virusObj.GetComponent<WordDisplay>();
 
         return wordDisplay;
     }
