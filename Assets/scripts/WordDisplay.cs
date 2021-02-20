@@ -1,14 +1,14 @@
-﻿using UnityEngine;
+﻿using TMPro;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class WordDisplay : MonoBehaviour
 {
-    public Text text;
+    public TMP_Text text;
 
     public void SetWord(string word)
     {
         text.text = word;
-        Debug.Log(word + " -> " + text.text);
     }
 
     public void RemoveLetter() 
