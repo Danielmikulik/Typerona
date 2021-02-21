@@ -12,15 +12,6 @@ public class WordManager : MonoBehaviour
     private bool hasActiveWord;
     private Word activeWord;
 
-    private void Start()
-    {
-        AddWord();
-        Invoke("AddWord", 1);
-        //AddWord();
-        Invoke("AddWord", 2);
-        //AddWord();
-    }
-
     public void AddWord()
     {
         Word word = new Word(WordGenerator.GetRandomWord(), wordSpawner.SpawnWord());

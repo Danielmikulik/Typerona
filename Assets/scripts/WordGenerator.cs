@@ -3,21 +3,21 @@
 public class WordGenerator : MonoBehaviour
 {
 
-    private static string[] wordList = {   "sidewalk", "robin", "three", "protect", "periodic",
-                                    "somber", "majestic", "jump", "pretty", "wound", "jazzy",
-                                    "memory", "join", "crack", "grade", "boot", "cloudy", "sick",
-                                    "mug", "hot", "tart", "dangerous", "mother", "rustic", "economic",
-                                    "weird", "cut", "parallel", "wood", "encouraging", "interrupt",
-                                    "guide", "long", "chief", "mom", "signal", "rely", "abortive",
-                                    "hair", "representative", "earth", "grate", "proud", "feel",
-                                    "hilarious", "addition", "silent", "play", "floor", "numerous",
-                                    "friend", "pizzas", "building", "organic", "past", "mute", "unusual",
-                                    "mellow", "analyse", "crate", "homely", "protest", "painstaking",
-                                    "society", "head", "female", "eager", "heap", "dramatic", "present",
-                                    "sin", "box", "pies", "awesome", "root", "available", "sleet", "wax",
-                                    "boring", "smash", "anger", "tasty", "spare", "tray", "daffy", "scarce",
-                                    "account", "spot", "thought", "distinct", "nimble", "practise", "cream",
-                                    "ablaze", "thoughtless", "love", "verdict", "giant"    };
+    private static string[] wordList = {   "chodník", "klávesnica", "strom", "ochrániť", "periodický",
+                                    "pochmúrne", "majestátny", "skok", "pekný", "zranenie", "hudobný",
+                                    "pamäť", "pripojiť", "prasklina", "známka", "topánka", "oblačno", "chorý",
+                                    "hrnček", "horúca", "koláč", "nebezpečný", "mama", "rustikálny", "ekonomické",
+                                    "divý", "rezať", "paralelný", "drevo", "povzbudenie", "prerušenie",
+                                    "návod", "dlhý", "veliteľ", "otec", "signál", "spoľahlivý", "neúspešný",
+                                    "vlasy", "representatívny", "zem", "grep", "pyšná", "pocit",
+                                    "zábavný", "prírastok", "tiché", "hrať", "podlaha", "početný",
+                                    "priateľ", "pizza", "budova", "organický", "minulosť", "stíšiť", "nezvyčaný",
+                                    "mäkký", "analyzovať", "bedňa", "jednoduchý", "protest", "starostlivo",
+                                    "spoločnosť", "hlava", "žena", "nedočkavý", "halda", "dramatický", "súčasnosť",
+                                    "hriech", "krabica", "koláče", "úžasnáá", "koreň", "dostupné", "dážďovka", "vosk",
+                                    "nudný", "ničiť", "hnev", "chutný", "navyše", "podnos", "blzon", "vzácny",
+                                    "účet", "misto", "myšlienka", "vzdialený", "šikovný", "tréning", "krém",
+                                    "zapáliť", "nezmysel", "láska", "verdikt", "obor"    };
 
     public static string GetRandomWord()
 	{

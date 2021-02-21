@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class VirusMovement : MonoBehaviour
 {
@@ -23,6 +22,7 @@ public class VirusMovement : MonoBehaviour
 
         if (transform.position.z <= Camera.main.transform.position.z + 3)
         {
+            FindObjectOfType<GameManager>().EndGame();
             Destroy(gameObject);
         }
     }
