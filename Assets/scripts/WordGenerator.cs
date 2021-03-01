@@ -14,9 +14,9 @@ public class WordGenerator : MonoBehaviour
                                     "priateľ", "pizza", "budova", "organický", "minulosť", "stíšiť", "nezvyčaný",
                                     "mäkký", "analyzovať", "bedňa", "jednoduchý", "protest", "starostlivo",
                                     "spoločnosť", "hlava", "žena", "nedočkavý", "halda", "dramatický", "súčasnosť",
-                                    "hriech", "krabica", "koláče", "úžasnáá", "koreň", "dostupné", "dážďovka", "vosk",
+                                    "hriech", "krabica", "koláče", "úžasná", "koreň", "dostupné", "dážďovka", "vosk",
                                     "nudný", "ničiť", "hnev", "chutný", "navyše", "podnos", "blzon", "vzácny",
-                                    "účet", "misto", "myšlienka", "vzdialený", "šikovný", "tréning", "krém",
+                                    "účet", "miesto", "myšlienka", "vzdialený", "šikovný", "tréning", "krém",
                                     "zapáliť", "nezmysel", "láska", "verdikt", "obor"    };
 
     public static string GetRandomWord()

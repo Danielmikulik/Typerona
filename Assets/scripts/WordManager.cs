@@ -1,6 +1,5 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class WordManager : MonoBehaviour
@@ -8,6 +7,8 @@ public class WordManager : MonoBehaviour
     public List<Word> words;
 
     public WordSpawner wordSpawner;
+    public TextMeshProUGUI scoreText;
+    private int score;
 
     private bool hasActiveWord;
     private Word activeWord;
@@ -15,9 +16,9 @@ public class WordManager : MonoBehaviour
     public void AddWord()
     {
         Word word = new Word(WordGenerator.GetRandomWord(), wordSpawner.SpawnWord());
-        Debug.Log(word.word);
-
         words.Add(word);
+
+        //Debug.Log(word.word);
     }
 
     public void TypeLetter(char letter)
@@ -27,6 +28,10 @@ public class WordManager : MonoBehaviour
             if (activeWord.GetNextLetter() == letter)
             {
                 activeWord.TypeLetter();
+            }
+            else
+            {
+                activeWord.Misstype();
             }
         }
         else
@@ -47,6 +52,15 @@ public class WordManager : MonoBehaviour
         {
             hasActiveWord = false;
             words.Remove(activeWord);
+            score++;
+            scoreText.text = score.ToString();
         }
+    }
+
+    public void CancelWordSelection()
+    {
+        activeWord.Unselect();
+        activeWord = null;
+        hasActiveWord = false;
     }
 }

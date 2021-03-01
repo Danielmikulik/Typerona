@@ -10,8 +10,15 @@ public class WordInput : MonoBehaviour
     void Update()
     {
         foreach (char letter in Input.inputString)
-        {
-            wordManager.TypeLetter(letter);
+        {          
+            if (letter == 32)
+            {
+                wordManager.CancelWordSelection();
+            }
+            else
+            {
+                wordManager.TypeLetter(letter);
+            }
         }
     }
 }

@@ -24,8 +24,18 @@ public class Word
 
     public void TypeLetter()
     {
-        typeIndex++;
-        display.RemoveLetter();
+        display.ColorLetter(typeIndex++, true);
+    }
+
+    public void Misstype()
+    {
+        display.ColorLetter(typeIndex, false);
+    }
+
+    public void Unselect()
+    {
+        typeIndex = 0;
+        display.DecolorWord();
     }
 
     public bool WordTyped()
