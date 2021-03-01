@@ -17,8 +17,6 @@ public class WordManager : MonoBehaviour
     {
         Word word = new Word(WordGenerator.GetRandomWord(), wordSpawner.SpawnWord());
         words.Add(word);
-
-        //Debug.Log(word.word);
     }
 
     public void TypeLetter(char letter)

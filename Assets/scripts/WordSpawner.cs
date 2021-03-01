@@ -2,14 +2,14 @@
 
 public class WordSpawner : MonoBehaviour
 {
-    public GameObject VirusBody;
+    public GameObject Virus;
     public WordDisplay SpawnWord()
     {
-        float x = Random.Range(-11f, 11f);
-        float y = Random.Range(-4f, 5.5f);
+        float x = Random.Range(-18f, 18f);
+        float y = Random.Range(-7f, 7f);
         float z = 5f;
-        GameObject virusObj = Instantiate(VirusBody, new Vector3(x, y, z), Quaternion.identity);
-        WordDisplay wordDisplay = virusObj.GetComponent<WordDisplay>();
+        GameObject virusObj = Instantiate(Virus, new Vector3(x, y, z), Quaternion.identity);
+        WordDisplay wordDisplay = virusObj.transform.GetChild(1).transform.GetChild(0).GetComponent<WordDisplay>();
 
         return wordDisplay;
     }

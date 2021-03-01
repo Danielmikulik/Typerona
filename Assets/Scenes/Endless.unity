@@ -197,7 +197,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3638d3098f8e1d746ae9bf2c1bd40481, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  VirusBody: {fileID: 663806803363560272, guid: a98081d7d4dbd8f4b9668ccdf26a7c28, type: 3}
+  Virus: {fileID: 7255169580261212727, guid: 8964767591b5b8b459202a8dded309d4, type: 3}
 --- !u!114 &92771043
 MonoBehaviour:
   m_ObjectHideFlags: 0

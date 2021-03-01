@@ -1,6 +1,5 @@
 ﻿using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class WordDisplay : MonoBehaviour
 {
@@ -32,6 +31,6 @@ public class WordDisplay : MonoBehaviour
 
     public void RemoveWord()
     {
-        Destroy(gameObject);
+        Destroy(transform.parent.parent.gameObject);
     }
 }
