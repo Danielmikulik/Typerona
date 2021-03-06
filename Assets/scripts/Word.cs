@@ -22,7 +22,7 @@ public class Word
 
     public char GetNextLetter()
     {
-        return word[typeIndex];
+        return typeIndex < word.Length ? word[typeIndex] : char.MinValue;
     }
 
     public void TypeLetter()
