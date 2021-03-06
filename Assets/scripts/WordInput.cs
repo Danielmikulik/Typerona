@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class WordInput : MonoBehaviour
 {
@@ -10,15 +8,27 @@ public class WordInput : MonoBehaviour
     void Update()
     {
         foreach (char letter in Input.inputString)
-        {          
-            if (letter == 32)
+        {
+            switch (letter)
             {
-                wordManager.CancelWordSelection();
+                case (char)32:
+                    wordManager.CancelWordSelection();
+                    break;
+                case (char)8:
+                    wordManager.DeleteLetter();
+                    break;
+                default:
+                    wordManager.TypeLetter(letter);
+                    break;
             }
-            else
-            {
-                wordManager.TypeLetter(letter);
-            }
+            //if (letter == 32)                           //checks if input is SPACE
+            //{
+            //    wordManager.CancelWordSelection();
+            //}
+            //else
+            //{
+            //    wordManager.TypeLetter(letter);
+            //}
         }
     }
 }

@@ -10,12 +10,26 @@ public class WordDisplay : MonoBehaviour
         text.text = word;
     }
 
-    public void ColorLetter(int index, bool correct) 
+    public void ColorLetter(int index, LetterState letterState)
     {
         int meshIndex = text.textInfo.characterInfo[index].materialReferenceIndex;
         int vertexIndex = text.textInfo.characterInfo[index].vertexIndex;
         Color32[] vertexColors = text.textInfo.meshInfo[meshIndex].colors32;
-        Color32 color = correct ? new Color32(0, 255, 0, 255) : new Color32(255, 0, 0, 255);
+
+        Color32 color = new Color32(0, 0, 0, 0);
+        switch (letterState)
+        {
+            case LetterState.Correct:
+                color = new Color32(0, 255, 0, 255);
+                break;
+            case LetterState.Misstyped:
+                color = new Color32(255, 0, 0, 255);
+                break;
+            case LetterState.Default:
+                color = new Color32(0, 0, 255, 255);
+                break;
+        }
+        //Color32 color = correct ? new Color32(0, 255, 0, 255) : new Color32(255, 0, 0, 255);
         vertexColors[vertexIndex + 0] = color;
         vertexColors[vertexIndex + 1] = color;
         vertexColors[vertexIndex + 2] = color;

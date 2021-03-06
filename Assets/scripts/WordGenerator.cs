@@ -2,7 +2,6 @@
 
 public class WordGenerator : MonoBehaviour
 {
-
     private static string[] wordList = {   "chodník", "klávesnica", "strom", "ochrániť", "periodický",
                                     "pochmúrne", "majestátny", "skok", "pekný", "zranenie", "hudobný",
                                     "pamäť", "pripojiť", "prasklina", "známka", "topánka", "oblačno", "chorý",

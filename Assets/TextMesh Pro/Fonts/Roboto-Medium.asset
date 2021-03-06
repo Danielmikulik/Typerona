@@ -1,13 +1,13 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!21 &-4687193238522328583
+--- !u!21 &-9148248141958679617
 Material:
   serializedVersion: 6
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Roboto Material
+  m_Name: Roboto-Medium Material
   m_Shader: {fileID: 4800000, guid: 68e6db2ebdc24f95958faec2be5558d6, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
@@ -32,7 +32,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: -3136584549551206003}
+        m_Texture: {fileID: -782959270184873774}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _OutlineTex:
@@ -103,13 +103,13 @@ Material:
     - _SpecularColor: {r: 1, g: 1, b: 1, a: 1}
     - _UnderlayColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_BuildTextureStacks: []
---- !u!28 &-3136584549551206003
+--- !u!28 &-782959270184873774
 Texture2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Roboto Atlas
+  m_Name: Roboto-Medium Atlas
   m_ImageContentsHash:
     serializedVersion: 2
     Hash: 00000000000000000000000000000000
@@ -158,11 +158,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 71c1514a6bd24e1e882cebbe1904ce04, type: 3}
-  m_Name: Roboto
+  m_Name: Roboto-Medium
   m_EditorClassIdentifier: 
-  hashCode: -955500245
-  material: {fileID: -4687193238522328583}
-  materialHashCode: 1555322923
+  hashCode: -724225253
+  material: {fileID: -9148248141958679617}
+  materialHashCode: -1164933157
   m_Version: 1.1.0
   m_SourceFontFileGUID: 010544968f528dc45adcc62d7a14445d
   m_SourceFontFile_EditorRef: {fileID: 12800000, guid: 010544968f528dc45adcc62d7a14445d, type: 3}
@@ -1955,7 +1955,7 @@ MonoBehaviour:
     m_GlyphIndex: 399
     m_Scale: 1
   m_AtlasTextures:
-  - {fileID: -3136584549551206003}
+  - {fileID: -782959270184873774}
   m_AtlasTextureIndex: 0
   m_IsMultiAtlasTexturesEnabled: 0
   m_UsedGlyphRects:

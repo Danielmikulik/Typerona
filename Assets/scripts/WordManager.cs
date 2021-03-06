@@ -15,7 +15,25 @@ public class WordManager : MonoBehaviour
 
     public void AddWord()
     {
-        Word word = new Word(WordGenerator.GetRandomWord(), wordSpawner.SpawnWord());
+        string generatedWord;
+        bool letterDuplicate;       //suggest that a word starting with same letter is already in the list
+        do
+        {
+            letterDuplicate = false;
+            generatedWord = WordGenerator.GetRandomWord();
+            char startLetter = generatedWord[0];
+            foreach (Word _word in words)
+            {
+                if (_word.word[0] == startLetter)
+                {
+                    letterDuplicate = true;
+                    break;
+                }
+            }
+
+        } while (letterDuplicate);
+
+        Word word = new Word(generatedWord, wordSpawner.SpawnWord());
         words.Add(word);
     }
 
@@ -29,7 +47,7 @@ public class WordManager : MonoBehaviour
             }
             else
             {
-                activeWord.Misstype();
+                activeWord.MisstypeLetter();
             }
         }
         else
@@ -51,7 +69,7 @@ public class WordManager : MonoBehaviour
             hasActiveWord = false;
             words.Remove(activeWord);
             score++;
-            scoreText.text = score.ToString();
+            scoreText.text = "SCORE: " + score.ToString();
         }
     }
 
@@ -60,5 +78,13 @@ public class WordManager : MonoBehaviour
         activeWord.Unselect();
         activeWord = null;
         hasActiveWord = false;
+    }
+
+    public void DeleteLetter()
+    {
+        if (hasActiveWord)
+        {
+            activeWord.DeleteTypedLetter();
+        }
     }
 }

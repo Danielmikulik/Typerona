@@ -12,7 +12,7 @@ public class Timer : MonoBehaviour
     {
         if (Time.time >= nextWordTime)
         {
-            wordManager.AddWord();
+            wordManager.AddWord();          
             nextWordTime = Time.time + wordDelay;
             if (wordDelay > 0.75f)
             {

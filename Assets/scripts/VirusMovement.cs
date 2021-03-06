@@ -1,23 +1,29 @@
 ﻿using UnityEngine;
-using TMPro;
 
 public class VirusMovement : MonoBehaviour
 {
     [SerializeField]
     private float speed = 0.2f;         //movement speed
     private Vector3 destination;        //destination point
+
     public Rigidbody rb;                
     public GameObject virusBody;
+    public GameObject wordText;
     [SerializeField]
-    private float[] rotation = new float[3];
+    private float[] rotations = new float[2];
+
+    private float startingDistance;
+    private Vector3 startingScale;
 
     // Start is called before the first frame update
     void Start()
     {
         destination = -(transform.position - Camera.main.transform.position);
-        rotation[0] = transform.position.x / 18;
-        rotation[1] = transform.position.y / 7;
-        rotation[2] = transform.position.z / 4;
+        rotations[0] = transform.position.x / 5;
+        rotations[1] = -transform.position.y / 5;
+
+        startingDistance = Vector3.Distance(Camera.main.transform.position, transform.position);
+        startingScale = transform.localScale;
     }
 
     // Update is called once per frame
@@ -35,7 +41,10 @@ public class VirusMovement : MonoBehaviour
         transform.Translate(destination.x * Time.fixedDeltaTime * speed,
                             destination.y * Time.fixedDeltaTime * speed,
                             destination.z * Time.fixedDeltaTime * speed);
+        
+        float currentDistance = Vector3.Distance(Camera.main.transform.position, transform.position) / startingDistance;
+        wordText.transform.localScale = startingScale * currentDistance;
 
-        virusBody.transform.Rotate(rotation[0], rotation[1], rotation[2]);
+        virusBody.transform.Rotate(rotations[1], rotations[0], 0);
     }
 }
