@@ -1,23 +1,29 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
 
 [System.Serializable]
 public class Word
 {
     public string word;
     private int typeIndex;
-    private List<int> missTypedIndexes = new List<int>();
+    private List<int> misstypedIndexes = new List<int>();
+    public WordType wordType { get; private set; }
 
     private WordDisplay display;
 
-    public Word(string _word, WordDisplay _display)
+    public Word(string _word, WordDisplay _display, WordType _wordType)
     {
         this.word = _word;
         this.typeIndex = 0;
 
         this.display = _display;
-        display.SetWord(word);
+        this.display.SetWord(word);
+        this.wordType = _wordType;
+
+        if (this.wordType != WordType.Normal)
+        {
+            this.display.ColorWord(this.wordType);
+        }
     }
 
     public char GetNextLetter()
@@ -37,7 +43,7 @@ public class Word
     {
         if (typeIndex < word.Length)
         {
-            missTypedIndexes.Add(typeIndex);
+            misstypedIndexes.Add(typeIndex);
             display.ColorLetter(typeIndex++, LetterState.Misstyped);
         }
     }
@@ -46,9 +52,9 @@ public class Word
     {
         if (typeIndex > 0)
         {
-            if (missTypedIndexes[missTypedIndexes.Count() - 1] == typeIndex - 1)
+            if (misstypedIndexes[misstypedIndexes.Count() - 1] == typeIndex - 1)
             {
-                missTypedIndexes.RemoveAt(missTypedIndexes.Count() - 1);
+                misstypedIndexes.RemoveAt(misstypedIndexes.Count() - 1);
             }
             display.ColorLetter(--typeIndex, LetterState.Default);
         }
@@ -57,13 +63,13 @@ public class Word
     public void Unselect()
     {
         typeIndex = 0;
-        missTypedIndexes.Clear();
+        misstypedIndexes.Clear();
         display.DecolorWord();
     }
 
     public bool WordTyped()
     {
-        bool wordTyped = (typeIndex >= word.Length && missTypedIndexes.Count <= 0);
+        bool wordTyped = (typeIndex >= word.Length && misstypedIndexes.Count <= 0);
         if (wordTyped)
         {
             display.RemoveWord();

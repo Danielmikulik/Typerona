@@ -29,7 +29,6 @@ public class WordDisplay : MonoBehaviour
                 color = new Color32(0, 0, 255, 255);
                 break;
         }
-        //Color32 color = correct ? new Color32(0, 255, 0, 255) : new Color32(255, 0, 0, 255);
         vertexColors[vertexIndex + 0] = color;
         vertexColors[vertexIndex + 1] = color;
         vertexColors[vertexIndex + 2] = color;
@@ -41,6 +40,19 @@ public class WordDisplay : MonoBehaviour
     {
         text.color = Color.yellow;
         text.color = Color.blue;
+    }
+
+    public void ColorWord(WordType wordType)
+    {
+        switch (wordType)
+        {
+            case WordType.Mask:
+                text.color = Color.magenta;
+                break;
+            case WordType.Disinfection:
+                text.color = Color.yellow;
+                break;
+        }
     }
 
     public void RemoveWord()

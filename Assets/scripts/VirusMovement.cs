@@ -9,6 +9,7 @@ public class VirusMovement : MonoBehaviour
     public Rigidbody rb;                
     public GameObject virusBody;
     public GameObject wordText;
+    public ParticleSystem destroyParticles;
     [SerializeField]
     private float[] rotations = new float[2];
 
@@ -31,8 +32,8 @@ public class VirusMovement : MonoBehaviour
     {
         if (transform.position.z <= Camera.main.transform.position.z + 3)
         {
-            FindObjectOfType<GameManager>().EndGame();
-            Destroy(gameObject);
+            FindObjectOfType<GameManager>().EndGame();                       
+            Destroy(gameObject, 2f);          
         }
     }
 
@@ -46,5 +47,10 @@ public class VirusMovement : MonoBehaviour
         wordText.transform.localScale = startingScale * currentDistance;
 
         virusBody.transform.Rotate(rotations[1], rotations[0], 0);
+    }
+
+    private void OnDestroy()
+    {
+        Instantiate(destroyParticles, transform.position, Quaternion.identity);
     }
 }

@@ -8,8 +8,18 @@ public class WordManager : MonoBehaviour
 
     public WordSpawner wordSpawner;
     public TextMeshProUGUI scoreText;
-    private int score;
+    public TextMeshProUGUI MultiplierText;
+    public GameObject maskPrefab;
+    public GameObject disinfectionPrefab;
 
+    private int score = 0;
+    private int multiplier = 1;
+    [SerializeField]
+    private float maskRate = 0.05f;
+    [SerializeField]
+    private float disinfectionRate = 0.03f;
+    
+    private bool hasMistake;
     private bool hasActiveWord;
     private Word activeWord;
 
@@ -33,7 +43,20 @@ public class WordManager : MonoBehaviour
 
         } while (letterDuplicate);
 
-        Word word = new Word(generatedWord, wordSpawner.SpawnWord());
+
+        WordType wordType = WordType.Normal;
+        float specialWord = Random.value;           //probability if the word will be special (mask / disinfection)
+
+        if (specialWord < maskRate)
+        {
+            wordType = WordType.Mask;
+        }
+        else if (specialWord < maskRate + disinfectionRate)
+        {
+            wordType = WordType.Disinfection;
+        }
+
+        Word word = new Word(generatedWord, wordSpawner.SpawnWord(), wordType);
         words.Add(word);
     }
 
@@ -48,6 +71,9 @@ public class WordManager : MonoBehaviour
             else
             {
                 activeWord.MisstypeLetter();
+                hasMistake = true;
+                multiplier = 1;
+                MultiplierText.text = "MULTIPLIER 1x";
             }
         }
         else
@@ -66,10 +92,7 @@ public class WordManager : MonoBehaviour
 
         if (hasActiveWord && activeWord.WordTyped())
         {
-            hasActiveWord = false;
-            words.Remove(activeWord);
-            score++;
-            scoreText.text = "SCORE: " + score.ToString();
+            DeleteWord();       
         }
     }
 
@@ -78,6 +101,7 @@ public class WordManager : MonoBehaviour
         activeWord.Unselect();
         activeWord = null;
         hasActiveWord = false;
+        hasMistake = false;
     }
 
     public void DeleteLetter()
@@ -86,5 +110,55 @@ public class WordManager : MonoBehaviour
         {
             activeWord.DeleteTypedLetter();
         }
+    }
+
+    private void DeleteWord()
+    {
+        hasActiveWord = false;
+        words.Remove(activeWord);
+        score += multiplier;
+        scoreText.text = "SCORE: " + score.ToString();
+
+        if (!hasMistake)
+        {
+            if (multiplier < 5)
+            {
+                multiplier++;
+                MultiplierText.text = "MULTIPLIER " + multiplier.ToString() + "x";              
+            }
+        }
+        else
+        {
+            hasMistake = false;
+        }
+
+        switch (activeWord.wordType)
+        {
+            case WordType.Mask:
+                UseMask();
+                break;
+            case WordType.Disinfection:
+                StartCoroutine(Disinfect(1f));
+                break;
+        }
+    }
+
+    private void UseMask()
+    {
+        GameObject mask = GameObject.FindGameObjectWithTag("Mask");
+        if (mask != null)                                               //if mask is present in a scene
+        {
+            Destroy(mask);
+        }
+        Instantiate(maskPrefab);
+    }
+
+    private IEnumerator<WaitForSeconds> Disinfect(float waitTime)
+    {             
+        GameObject disinfection = Instantiate(disinfectionPrefab);
+        yield return new WaitForSeconds(waitTime);
+        disinfection.GetComponent<Disinfection>().DestroyAllViruses();
+        yield return new WaitForSeconds(disinfection.GetComponent<Disinfection>().particles.main.duration);
+        Destroy(disinfection);
     }
 }
