@@ -7,22 +7,22 @@ public class Disinfection : MonoBehaviour
 
     public void DestroyAllViruses()
     {
-        StartCoroutine(Disinfect());
+        StartCoroutine(Disinfect());  
     }
 
     private IEnumerator<WaitForSeconds> Disinfect()
     {
+        Debug.Log(Time.time);
+        WordManager wordManager = GameObject.FindGameObjectWithTag("WordManager").GetComponent<WordManager>();
+        Debug.Log(Time.time);
         Instantiate(particles);
-        Debug.Log("som tuuuuuuuu");
-        yield return new WaitForSeconds(2f);
-        Debug.Log("som tuuuu");
+        yield return new WaitForSeconds(particles.main.duration / 2);
         GameObject[] viruses = GameObject.FindGameObjectsWithTag("Virus");
-        Debug.Log("som tu");
-        foreach (GameObject virus in viruses)
+        for (int i = 0; i < viruses.Length; i++)
         {
+            GameObject virus = viruses[i];
             Destroy(virus);
-            Debug.Log("virus dead");
         }
-        yield return new WaitForSeconds(2f);
+        wordManager.ClearList();
     }
 }

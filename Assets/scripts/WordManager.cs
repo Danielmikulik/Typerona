@@ -60,6 +60,16 @@ public class WordManager : MonoBehaviour
         words.Add(word);
     }
 
+    public void ClearList()
+    {
+        if (hasActiveWord)
+        {
+            hasActiveWord = false;
+            activeWord = null;
+        }
+        words.Clear();
+    }
+
     public void TypeLetter(char letter)
     {
         if (hasActiveWord)
@@ -106,10 +116,10 @@ public class WordManager : MonoBehaviour
 
     public void DeleteLetter()
     {
-        if (hasActiveWord)
-        {
+        //if (hasActiveWord)
+        //{
             activeWord.DeleteTypedLetter();
-        }
+        //}
     }
 
     private void DeleteWord()

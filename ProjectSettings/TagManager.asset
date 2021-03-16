@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Virus
   - Mask
+  - WordManager
   layers:
   - Default
   - TransparentFX

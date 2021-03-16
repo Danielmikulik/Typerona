@@ -11,24 +11,16 @@ public class WordInput : MonoBehaviour
         {
             switch (letter)
             {
-                case (char)32:
+                case (char)32:                              //if input is spacebar
                     wordManager.CancelWordSelection();
                     break;
-                case (char)8:
+                case (char)8:                               //if input is backspace
                     wordManager.DeleteLetter();
                     break;
                 default:
                     wordManager.TypeLetter(letter);
                     break;
             }
-            //if (letter == 32)                           //checks if input is SPACE
-            //{
-            //    wordManager.CancelWordSelection();
-            //}
-            //else
-            //{
-            //    wordManager.TypeLetter(letter);
-            //}
         }
     }
 }
