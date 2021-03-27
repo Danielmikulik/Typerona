@@ -10,9 +10,14 @@ public class WordManager : MonoBehaviour
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI MultiplierText;
     public GameObject maskPrefab;
+
     public GameObject disinfectionPrefab;
 
+    public string Name { get; set; }
     private int score = 0;
+    private int mistakeCount = 0;
+    private float WPM = 0;          //words typed per minute
+    private int typedWords = 0;
     private int multiplier = 1;
     [SerializeField]
     private float maskRate = 0.05f;
@@ -26,22 +31,22 @@ public class WordManager : MonoBehaviour
     public void AddWord()
     {
         string generatedWord;
-        bool letterDuplicate;       //suggest that a word starting with same letter is already in the list
+        bool duplicate;       //suggest that list of words already contains generated word
         do
         {
-            letterDuplicate = false;
+            duplicate = false;
             generatedWord = WordGenerator.GetRandomWord();
-            char startLetter = generatedWord[0];
-            foreach (Word _word in words)
+            foreach (Word wordOnScene in words)
             {
-                if (_word.word[0] == startLetter)
+                if (wordOnScene.word.Equals(generatedWord))
                 {
-                    letterDuplicate = true;
+                    duplicate = true;
+                    Debug.Log(generatedWord);
                     break;
                 }
             }
 
-        } while (letterDuplicate);
+        } while (duplicate);
 
 
         WordType wordType = WordType.Normal;
@@ -80,7 +85,8 @@ public class WordManager : MonoBehaviour
             }
             else
             {
-                activeWord.MisstypeLetter();
+                mistakeCount++;
+                activeWord.MisstypeLetter(letter);
                 hasMistake = true;
                 multiplier = 1;
                 MultiplierText.text = "MULTIPLIER 1x";
@@ -102,24 +108,34 @@ public class WordManager : MonoBehaviour
 
         if (hasActiveWord && activeWord.WordTyped())
         {
-            DeleteWord();       
+            DeleteWord();
+            typedWords++;
         }
     }
 
     public void CancelWordSelection()
     {
-        activeWord.Unselect();
-        activeWord = null;
-        hasActiveWord = false;
-        hasMistake = false;
+        if (hasActiveWord)
+        {
+            activeWord.Unselect();
+            activeWord = null;
+            hasActiveWord = false;
+            hasMistake = false;
+        }        
     }
 
     public void DeleteLetter()
     {
-        //if (hasActiveWord)
-        //{
+        if (hasActiveWord)
+        {
             activeWord.DeleteTypedLetter();
-        //}
+        }
+    }
+
+    internal void writeStats()
+    {
+        WPM = typedWords / (Time.time / 60);        
+        Debug.Log(WPM);
     }
 
     private void DeleteWord()

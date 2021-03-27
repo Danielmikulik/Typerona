@@ -1,12 +1,13 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System;
+using System.Collections.Generic;
 
 [System.Serializable]
 public class Word
 {
     public string word;
-    private int typeIndex;
-    private List<int> misstypedIndexes = new List<int>();
+    private int typeIndex;    
+    private string typedWord;
+    private List<LetterTyped> lettersTyped = new List<LetterTyped>();
     public WordType wordType { get; private set; }
 
     private WordDisplay display;
@@ -32,44 +33,46 @@ public class Word
     }
 
     public void TypeLetter()
-    {
+    {       
         if (typeIndex < word.Length)
         {
-            display.ColorLetter(typeIndex++, LetterState.Correct);
+            lettersTyped.Add(new LetterTyped(DateTime.Now, word[typeIndex]));
+            this.typedWord += word[typeIndex];
+            display.ColorLetter(typeIndex++, LetterState.Correct);            
         }       
     }
 
-    public void MisstypeLetter()
+    public void MisstypeLetter(char letter)
     {
+        lettersTyped.Add(new LetterTyped(DateTime.Now, letter));
         if (typeIndex < word.Length)
-        {
-            misstypedIndexes.Add(typeIndex);
+        {           
+            this.typedWord += letter;
             display.ColorLetter(typeIndex++, LetterState.Misstyped);
         }
     }
 
     public void DeleteTypedLetter()
     {
+        lettersTyped.Add(new LetterTyped(DateTime.Now, '\b'));
         if (typeIndex > 0)
-        {
-            if (misstypedIndexes[misstypedIndexes.Count() - 1] == typeIndex - 1)
-            {
-                misstypedIndexes.RemoveAt(misstypedIndexes.Count() - 1);
-            }
+        {            
+            typedWord = this.typedWord.Remove(this.typedWord.Length - 1);                     
             display.ColorLetter(--typeIndex, LetterState.Default);
         }
     }
 
     public void Unselect()
     {
+        lettersTyped.Clear();       
         typeIndex = 0;
-        misstypedIndexes.Clear();
+        typedWord = "";        
         display.DecolorWord();
     }
 
     public bool WordTyped()
-    {
-        bool wordTyped = (typeIndex >= word.Length && misstypedIndexes.Count <= 0);
+    {        
+        bool wordTyped = (typeIndex >= word.Length && typedWord.Equals(word));        
         if (wordTyped)
         {
             display.RemoveWord();

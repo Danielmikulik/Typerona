@@ -1,16 +1,21 @@
 ﻿using UnityEngine;
+using TMPro;
 
 public class VirusMovement : MonoBehaviour
 {
+    const float defaultLength = 5;
+
     [SerializeField]
     private float speed = 0.2f;         //movement speed
+    [SerializeField]
+    private int wordLength;
     private Vector3 destination;        //destination point
 
     public Rigidbody rb;                
     public GameObject virusBody;
     public GameObject wordText;
     public ParticleSystem destroyParticles;
-    [SerializeField]
+    
     private float[] rotations = new float[2];
 
     private float startingDistance;
@@ -19,6 +24,9 @@ public class VirusMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        wordLength = wordText.GetComponent<TextMeshProUGUI>().text.Length;
+        speed = speed * (defaultLength / wordLength);
+
         destination = -(transform.position - Camera.main.transform.position);
         rotations[0] = transform.position.x / 5;
         rotations[1] = -transform.position.y / 5;

@@ -4,12 +4,14 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public GameObject GameOver;
+    public WordManager wordManager;
 
     bool gameEnded = false;
     public void EndGame()
     {
         if (!gameEnded)
         {
+            wordManager.writeStats();
             gameEnded = true;
             GameOver.SetActive(true);
             Invoke("Restart", 4);
