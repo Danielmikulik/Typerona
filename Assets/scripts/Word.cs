@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public class Word
 {
     public string word;
-    private int typeIndex;    
+    public int typeIndex { get; private set; }  
     private string typedWord;
     private List<LetterTyped> lettersTyped = new List<LetterTyped>();
     public WordType wordType { get; private set; }
@@ -30,6 +30,11 @@ public class Word
     public char GetNextLetter()
     {
         return typeIndex < word.Length ? word[typeIndex] : char.MinValue;
+    }
+
+    public char GetLastTypedLetter()
+    {
+        return typeIndex < word.Length ? word[typeIndex - 1] : char.MinValue;
     }
 
     public void TypeLetter()

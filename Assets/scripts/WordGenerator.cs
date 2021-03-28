@@ -8,13 +8,13 @@ public class WordGenerator : MonoBehaviour
                                     "hrnček", "horúca", "koláč", "nebezpečný", "mama", "rustikálny", "ekonomické",
                                     "divý", "rezať", "paralelný", "drevo", "povzbudenie", "prerušenie",
                                     "návod", "dlhý", "veliteľ", "otec", "signál", "spoľahlivý", "neúspešný",
-                                    "vlasy", "representatívny", "zem", "grep", "pyšná", "pocit",
+                                    "vlasy", "reprezentatívny", "zem", "grep", "pyšná", "pocit",
                                     "zábavný", "prírastok", "tiché", "hrať", "podlaha", "početný",
                                     "priateľ", "pizza", "budova", "organický", "minulosť", "stíšiť", "nezvyčaný",
                                     "mäkký", "analyzovať", "bedňa", "jednoduchý", "protest", "starostlivo",
                                     "spoločnosť", "hlava", "žena", "nedočkavý", "halda", "dramatický", "súčasnosť",
                                     "hriech", "krabica", "koláče", "úžasná", "koreň", "dostupné", "dážďovka", "vosk",
-                                    "nudný", "ničiť", "hnev", "chutný", "navyše", "podnos", "blzon", "vzácny",
+                                    "nudný", "ničiť", "hnev", "chutný", "navyše", "podnos", "blázon", "vzácny",
                                     "účet", "miesto", "myšlienka", "vzdialený", "šikovný", "tréning", "krém",
                                     "zapáliť", "nezmysel", "láska", "verdikt", "obor"    };
 
