@@ -12,9 +12,7 @@ public class Disinfection : MonoBehaviour
 
     private IEnumerator<WaitForSeconds> Disinfect()
     {
-        Debug.Log(Time.time);
         WordManager wordManager = GameObject.FindGameObjectWithTag("WordManager").GetComponent<WordManager>();
-        Debug.Log(Time.time);
         Instantiate(particles);
         yield return new WaitForSeconds(particles.main.duration / 2);
         GameObject[] viruses = GameObject.FindGameObjectsWithTag("Virus");

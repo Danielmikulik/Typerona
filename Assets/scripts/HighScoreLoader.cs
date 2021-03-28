@@ -28,7 +28,6 @@ public class HighScoreLoader : MonoBehaviour
         else
         {
             Debug.Log(www.error);
-            //Debug.Log("Something went wrong");
         }
     }
 

@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Networking;
 
 public class WordManager : MonoBehaviour
 {
@@ -170,9 +172,11 @@ public class WordManager : MonoBehaviour
 
     internal void writeStats()
     {
-        WPM = typedWords / (Time.time / 60);        
-        Debug.Log(WPM);
+        WPM = typedWords / (Time.time / 60);
+        FindObjectOfType<GameManager>().PostStats("test", score, mistakeCount, WPM);
+        Debug.Log(WPM);       
     }
+ 
 
     private void MistakeMade()
     {

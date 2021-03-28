@@ -47,14 +47,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36341944909ecf348a317e6f04dd0093, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0.05
+  speed: 0.5
+  wordLength: 0
   rb: {fileID: 7255169580261212720}
   virusBody: {fileID: 7897583725798158022}
   wordText: {fileID: 7255169580786654726}
   destroyParticles: {fileID: 4618133644417091524, guid: eeb410483eedbe14dbdb85f381df9d61, type: 3}
-  rotations:
-  - 0
-  - 0
 --- !u!54 &7255169580261212720
 Rigidbody:
   m_ObjectHideFlags: 0

@@ -5,7 +5,7 @@ public class Timer : MonoBehaviour
     public WordManager wordManager;
 
     [SerializeField]
-    private float wordDelay = 1.5f;
+    private float wordDelay = 2.5f;
     private float nextWordTime = 0f;
     // Update is called once per frame
     void Update()
@@ -14,7 +14,7 @@ public class Timer : MonoBehaviour
         {
             wordManager.AddWord();          
             nextWordTime = Time.time + wordDelay;
-            if (wordDelay > 0.75f)
+            if (wordDelay > 1f)
             {
                 wordDelay *= .99f;
             }         

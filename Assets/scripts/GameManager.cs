@@ -1,4 +1,7 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Text;
+using UnityEngine;
+using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
@@ -10,10 +13,10 @@ public class GameManager : MonoBehaviour
     public void EndGame()
     {
         if (!gameEnded)
-        {
-            wordManager.writeStats();
+        {           
             gameEnded = true;
             GameOver.SetActive(true);
+            wordManager.writeStats();
             Invoke("Restart", 4);
         }       
     }
@@ -21,5 +24,41 @@ public class GameManager : MonoBehaviour
     public void Restart()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    public void PostStats(string name, int score, int mistakes, float WPM) => StartCoroutine(PostData_Coroutine(name, score, mistakes, WPM));
+
+    private IEnumerator PostData_Coroutine(string name, int score, int mistakes, float WPM)
+    {
+        string URL = "http://localhost/api/players";
+
+        Player player = new Player();
+        player.name = name;
+        player.score = score;
+        player.mistakes = mistakes;
+        player.WPM = WPM;
+        string jsonData = JsonUtility.ToJson(player);
+
+        Debug.Log(jsonData);
+    
+        using (UnityWebRequest request = UnityWebRequest.Post(URL, jsonData))
+        {
+            byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes(jsonData);
+            request.uploadHandler = (UploadHandler)new UploadHandlerRaw(jsonToSend);
+            //request.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
+            request.SetRequestHeader("Content-Type", "application/json");
+            Debug.Log("Uploading stats...");
+            yield return request.SendWebRequest();
+            Debug.Log("Data sent");
+            if (request.isNetworkError || request.isHttpError)
+            {
+                Debug.Log(request.error);
+            }
+            else
+            {
+                Debug.Log("paek");
+                Debug.Log(request.downloadHandler.text);
+            }
+        }
     }
 }
