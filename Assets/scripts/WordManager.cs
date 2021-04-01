@@ -1,8 +1,7 @@
-﻿using System.Collections;
+﻿using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Networking;
 
 public class WordManager : MonoBehaviour
 {
@@ -14,6 +13,8 @@ public class WordManager : MonoBehaviour
     public GameObject maskPrefab;
 
     public GameObject disinfectionPrefab;
+
+    public List<(string, LetterTypedWrapper)> wordTypingSequences = new List<(string, LetterTypedWrapper)>();
 
     public string Name { get; set; }
     private int score = 0;
@@ -29,6 +30,7 @@ public class WordManager : MonoBehaviour
     private bool hasMistake;
     private bool hasActiveWord;
     private List<Word> activeWords = new List<Word>();
+    
 
     public void AddWord()
     {
@@ -51,7 +53,7 @@ public class WordManager : MonoBehaviour
 
 
         WordType wordType = WordType.Normal;
-        float specialWord = Random.value;           //probability if the word will be special (mask / disinfection)
+        float specialWord = UnityEngine.Random.value;           //probability if the word will be special (mask / disinfection)
 
         if (specialWord < maskRate)
         {
@@ -137,11 +139,21 @@ public class WordManager : MonoBehaviour
                 }
             }
         }
+       
+        ValueTuple<string, LetterTypedWrapper> typingSequence = activeWords[0].WordTyped();
 
-        if (hasActiveWord && activeWords[0].WordTyped())
+        //if (hasActiveWord && activeWords[0].WordTyped())
+        if (hasActiveWord && typingSequence != (null, null))
         {
+            wordTypingSequences.Add(typingSequence);
             DeleteWord();
             typedWords++;
+
+            //Debug.Log(typingSequence.Item1 + " : ");
+            //foreach (LetterTyped letterTyped in typingSequence.Item2)
+            //{
+            //    Debug.Log(letterTyped.letter + " -> " + letterTyped.time.ToString("HH.mm.ss.FFFFFF"));
+            //}
         }
     }
 
@@ -173,8 +185,36 @@ public class WordManager : MonoBehaviour
     internal void writeStats()
     {
         WPM = typedWords / (Time.time / 60);
+
         FindObjectOfType<GameManager>().PostStats("test", score, mistakeCount, WPM);
-        Debug.Log(WPM);       
+
+        //WordsTypedLog sequence = new WordsTypedLog(wordTypingSequences);
+
+        string jsonData = "{ \"typingSequences\" : [\n";
+        //foreach ((string, LetterTypedWrapper) wordTyped in wordTypingSequences)
+        for (int i = 0; i < wordTypingSequences.Count; i++)
+        {
+            jsonData += JsonUtility.ToJson(wordTypingSequences[i], true);
+            if (i != wordTypingSequences.Count - 1)
+            {
+                jsonData += ",";
+            }
+            jsonData += "\n";
+            //Debug.Log(jsonData);
+        }
+        jsonData += "] }";
+
+        Debug.Log(jsonData);
+        
+        //string jsonData = JsonUtility.ToJson(wordTypingSequences[0], true);
+        //Debug.Log(jsonData);
+
+        //********** skus foreach **********//
+
+        /*foreach (LetterTyped letter in wordTypingSequences[0].Item2)
+        {
+            Debug.Log(letter.Letter + " -> " + letter.Time);
+        }*/
     }
  
 

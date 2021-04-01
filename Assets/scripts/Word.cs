@@ -41,7 +41,7 @@ public class Word
     {       
         if (typeIndex < word.Length)
         {
-            lettersTyped.Add(new LetterTyped(DateTime.Now, word[typeIndex]));
+            lettersTyped.Add(new LetterTyped(DateTime.Now.ToString("HH:mm:ss.ffffff"), word[typeIndex].ToString()));
             this.typedWord += word[typeIndex];
             display.ColorLetter(typeIndex++, LetterState.Correct);            
         }       
@@ -49,7 +49,7 @@ public class Word
 
     public void MisstypeLetter(char letter)
     {
-        lettersTyped.Add(new LetterTyped(DateTime.Now, letter));
+        lettersTyped.Add(new LetterTyped(DateTime.Now.ToString("HH:mm:ss.ffffff"), letter.ToString()));
         if (typeIndex < word.Length)
         {           
             this.typedWord += letter;
@@ -59,7 +59,7 @@ public class Word
 
     public void DeleteTypedLetter()
     {
-        lettersTyped.Add(new LetterTyped(DateTime.Now, '\b'));
+        lettersTyped.Add(new LetterTyped(DateTime.Now.ToString("HH:mm:ss.ffffff"), '\b'.ToString()));
         if (typeIndex > 0)
         {            
             typedWord = this.typedWord.Remove(this.typedWord.Length - 1);                     
@@ -75,13 +75,14 @@ public class Word
         display.DecolorWord();
     }
 
-    public bool WordTyped()
+    public ValueTuple<string, LetterTypedWrapper> WordTyped()
     {        
         bool wordTyped = (typeIndex >= word.Length && typedWord.Equals(word));        
         if (wordTyped)
         {
             display.RemoveWord();
+            return (word, new LetterTypedWrapper(lettersTyped));
         }
-        return wordTyped;
+        return (null, null);
     }
 }
