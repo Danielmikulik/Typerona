@@ -14,7 +14,7 @@ public class WordManager : MonoBehaviour
 
     public GameObject disinfectionPrefab;
 
-    public List<(string, LetterTypedWrapper)> wordTypingSequences = new List<(string, LetterTypedWrapper)>();
+    public WordsTypedLog wordTypingSequences = new WordsTypedLog();
 
     public string Name { get; set; }
     private int score = 0;
@@ -140,12 +140,12 @@ public class WordManager : MonoBehaviour
             }
         }
        
-        ValueTuple<string, LetterTypedWrapper> typingSequence = activeWords[0].WordTyped();
+        WordTyped typingSequence = activeWords[0].WordTyped();
 
         //if (hasActiveWord && activeWords[0].WordTyped())
-        if (hasActiveWord && typingSequence != (null, null))
+        if (hasActiveWord && typingSequence != null)
         {
-            wordTypingSequences.Add(typingSequence);
+            wordTypingSequences.addSequence(typingSequence);
             DeleteWord();
             typedWords++;
 
@@ -186,35 +186,35 @@ public class WordManager : MonoBehaviour
     {
         WPM = typedWords / (Time.time / 60);
 
-        FindObjectOfType<GameManager>().PostStats("test", score, mistakeCount, WPM);
+
 
         //WordsTypedLog sequence = new WordsTypedLog(wordTypingSequences);
 
-        string jsonData = "{ \"typingSequences\" : [\n";
-        //foreach ((string, LetterTypedWrapper) wordTyped in wordTypingSequences)
-        for (int i = 0; i < wordTypingSequences.Count; i++)
-        {
-            jsonData += JsonUtility.ToJson(wordTypingSequences[i], true);
-            if (i != wordTypingSequences.Count - 1)
-            {
-                jsonData += ",";
-            }
-            jsonData += "\n";
-            //Debug.Log(jsonData);
-        }
-        jsonData += "] }";
 
-        Debug.Log(jsonData);
-        
-        //string jsonData = JsonUtility.ToJson(wordTypingSequences[0], true);
+
+        //string jsonData = "{ \"typingSequences\" : [\n";
+        ////foreach ((string, LetterTypedWrapper) wordTyped in wordTypingSequences)
+        //for (int i = 0; i < wordTypingSequences.Count; i++)
+        //{
+        //    jsonData += JsonUtility.ToJson(wordTypingSequences[i], true);
+        //    if (i != wordTypingSequences.Count - 1)
+        //    {
+        //        jsonData += ",";
+        //    }
+        //    jsonData += "\n";
+        //    //Debug.Log(jsonData);
+        //}
+        //jsonData += "] }";
+
         //Debug.Log(jsonData);
 
-        //********** skus foreach **********//
 
-        /*foreach (LetterTyped letter in wordTypingSequences[0].Item2)
-        {
-            Debug.Log(letter.Letter + " -> " + letter.Time);
-        }*/
+        //string jsonData = JsonUtility.ToJson(wordTypingSequences, true);
+        //Debug.Log(jsonData);
+
+        Player playerStats = new Player("test", score, mistakeCount, WPM, wordTypingSequences);
+
+        FindObjectOfType<GameManager>().PostStats(playerStats);
     }
  
 

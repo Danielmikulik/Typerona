@@ -26,18 +26,18 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
-    public void PostStats(string name, int score, int mistakes, float WPM) => StartCoroutine(PostData_Coroutine(name, score, mistakes, WPM));
+    public void PostStats(Player playerStats) => StartCoroutine(PostData_Coroutine(playerStats));
 
-    private IEnumerator PostData_Coroutine(string name, int score, int mistakes, float WPM)
+    private IEnumerator PostData_Coroutine(Player playerStats)
     {
         string URL = "http://localhost/api/players";
 
-        Player player = new Player();
-        player.name = name;
-        player.score = score;
-        player.mistakes = mistakes;
-        player.WPM = WPM;
-        string jsonData = JsonUtility.ToJson(player);
+        //Player player = new Player();
+        //player.name = name;
+        //player.score = score;
+        //player.mistakes = mistakes;
+        //player.WPM = WPM;
+        string jsonData = JsonUtility.ToJson(playerStats, true);
 
         Debug.Log(jsonData);
     

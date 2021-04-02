@@ -75,14 +75,14 @@ public class Word
         display.DecolorWord();
     }
 
-    public ValueTuple<string, LetterTypedWrapper> WordTyped()
+    public WordTyped WordTyped()
     {        
         bool wordTyped = (typeIndex >= word.Length && typedWord.Equals(word));        
         if (wordTyped)
         {
             display.RemoveWord();
-            return (word, new LetterTypedWrapper(lettersTyped));
+            return new WordTyped(word, lettersTyped);
         }
-        return (null, null);
+        return null;
     }
 }

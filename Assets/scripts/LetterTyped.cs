@@ -16,23 +16,30 @@ public class LetterTyped
 }
 
 [Serializable]
-public class LetterTypedWrapper
+public class WordTyped
 {
-    public List<LetterTyped> wordTyped;
+    public string Word;
+    public List<LetterTyped> Sequence;
 
-    public LetterTypedWrapper(List<LetterTyped> wordTyped)
+    public WordTyped(string word, List<LetterTyped> sequence)
     {
-        this.wordTyped = wordTyped;
+        this.Word = word;
+        this.Sequence = sequence;
     }
 }
 
 [Serializable]
 public class WordsTypedLog
 {
-    public List<(string, LetterTypedWrapper)> log;
+    public List<WordTyped> typingSequences;
 
-    public WordsTypedLog(List<(string, LetterTypedWrapper)> log)
+    public WordsTypedLog()
     {
-        this.log = log;
+        this.typingSequences = new List<WordTyped>();
+    }
+
+    public void addSequence(WordTyped wordTyped)
+    {
+        this.typingSequences.Add(wordTyped);
     }
 }

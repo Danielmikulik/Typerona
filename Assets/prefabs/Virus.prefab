@@ -47,7 +47,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36341944909ecf348a317e6f04dd0093, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0.3
+  speed: 0.25
   wordLength: 0
   rb: {fileID: 7255169580261212720}
   virusBody: {fileID: 7897583725798158022}

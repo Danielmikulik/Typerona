@@ -14,4 +14,14 @@ public class Player
     public int score;
     public int mistakes;
     public float WPM;
+    public WordsTypedLog wordSequences;
+
+    public Player(string name, int score, int mistakes, float WPM, WordsTypedLog wordSequences)
+    {
+        this.name = name;
+        this.score = score;
+        this.mistakes = mistakes;
+        this.WPM = WPM;
+        this.wordSequences = wordSequences;
+    }
 }
