@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -14,12 +13,16 @@ public class WordManager : MonoBehaviour
 
     public GameObject disinfectionPrefab;
 
-    public WordsTypedLog wordTypingSequences = new WordsTypedLog();
+    private WordsTypedLog wordTypingSequences = new WordsTypedLog();
 
-    public string Name { get; set; }
-    private int score = 0;
-    private int mistakeCount = 0;
-    private float WPM = 0;          //words typed per minute
+    public string Name { get; private set; }
+    public static int Score { get; private set; }
+    public static int MistakeCount { get; private set; }
+    public static float WPM { get; private set; }
+
+    private static int score;
+    private static int mistakeCount;
+    private static float wpm;          //words typed per minute
     private int typedWords = 0;
     private int multiplier = 1;
     [SerializeField]
@@ -30,7 +33,11 @@ public class WordManager : MonoBehaviour
     private bool hasMistake;
     private bool hasActiveWord;
     private List<Word> activeWords = new List<Word>();
-    
+
+    public void Start()
+    {
+        Name = NameInput.Name;
+    }
 
     public void AddWord()
     {
@@ -142,18 +149,11 @@ public class WordManager : MonoBehaviour
        
         WordTyped typingSequence = activeWords[0].WordTyped();
 
-        //if (hasActiveWord && activeWords[0].WordTyped())
         if (hasActiveWord && typingSequence != null)
         {
             wordTypingSequences.addSequence(typingSequence);
             DeleteWord();
             typedWords++;
-
-            //Debug.Log(typingSequence.Item1 + " : ");
-            //foreach (LetterTyped letterTyped in typingSequence.Item2)
-            //{
-            //    Debug.Log(letterTyped.letter + " -> " + letterTyped.time.ToString("HH.mm.ss.FFFFFF"));
-            //}
         }
     }
 
@@ -185,42 +185,14 @@ public class WordManager : MonoBehaviour
     internal void writeStats()
     {
         WPM = typedWords / (Time.time / 60);
-
-
-
-        //WordsTypedLog sequence = new WordsTypedLog(wordTypingSequences);
-
-
-
-        //string jsonData = "{ \"typingSequences\" : [\n";
-        ////foreach ((string, LetterTypedWrapper) wordTyped in wordTypingSequences)
-        //for (int i = 0; i < wordTypingSequences.Count; i++)
-        //{
-        //    jsonData += JsonUtility.ToJson(wordTypingSequences[i], true);
-        //    if (i != wordTypingSequences.Count - 1)
-        //    {
-        //        jsonData += ",";
-        //    }
-        //    jsonData += "\n";
-        //    //Debug.Log(jsonData);
-        //}
-        //jsonData += "] }";
-
-        //Debug.Log(jsonData);
-
-
-        //string jsonData = JsonUtility.ToJson(wordTypingSequences, true);
-        //Debug.Log(jsonData);
-
-        Player playerStats = new Player("test", score, mistakeCount, WPM, wordTypingSequences);
-
+        Player playerStats = new Player(Score, MistakeCount, WPM, wordTypingSequences, Name);
         FindObjectOfType<GameManager>().PostStats(playerStats);
     }
  
 
     private void MistakeMade()
     {
-        mistakeCount++;
+        MistakeCount++;
         hasMistake = true;
         multiplier = 1;
         MultiplierText.text = "MULTIPLIER 1x";
@@ -230,8 +202,8 @@ public class WordManager : MonoBehaviour
     {
         hasActiveWord = false;
         words.Remove(activeWords[0]);
-        score += multiplier;
-        scoreText.text = "SCORE: " + score.ToString();
+        Score += multiplier;
+        scoreText.text = "SCORE: " + Score.ToString();
 
         if (!hasMistake)
         {
@@ -246,7 +218,7 @@ public class WordManager : MonoBehaviour
             hasMistake = false;
         }
 
-        switch (activeWords[0].wordType)
+        switch (activeWords[0].WordType)
         {
             case WordType.Mask:
                 UseMask();

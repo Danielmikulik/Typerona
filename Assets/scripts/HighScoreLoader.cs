@@ -1,11 +1,13 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.Networking;
 
 public class HighScoreLoader : MonoBehaviour
 {
     private string URL = "http://localhost/api/players";
+    private PlayerData playerData;
+
+    public PlayerData PlayerData { get; private set; }
 
     // Start is called before the first frame update
     void Start()
@@ -17,26 +19,29 @@ public class HighScoreLoader : MonoBehaviour
     {
         Debug.Log("Processing data, Please wait...");
 
-        WWW www = new WWW(URL);        
-        yield return www;
-        string json = "{ \"players\" : " + www.text + "}";
-        if (www.error == null)
+        using (UnityWebRequest webRequest = UnityWebRequest.Get(URL))
         {
-            Debug.Log(json);
-            processData(json);
-        }
-        else
-        {
-            Debug.Log(www.error);
-        }
+            yield return webRequest.SendWebRequest();
+
+            string json = "{ \"players\" : " + webRequest.downloadHandler.text + "}";
+            if (webRequest.isHttpError || webRequest.isNetworkError)
+            {
+                Debug.Log(webRequest.error);
+            }
+            else
+            {
+                Debug.Log(json);
+                processData(json);                
+            }
+        }  
     }
 
     public void processData(string json) 
     {
-        PlayerData data = JsonUtility.FromJson<PlayerData>(json);
-        foreach (Player player in data.players)
+        PlayerData = JsonUtility.FromJson<PlayerData>(json);
+        foreach (Player player in PlayerData.players)
         {
             Debug.Log(player.name + " " + player.score + " " + player.mistakes + " " + player.WPM);
         }
-    }
+    }    
 }

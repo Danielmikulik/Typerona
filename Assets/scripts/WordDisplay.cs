@@ -10,7 +10,7 @@ public class WordDisplay : MonoBehaviour
         text.text = word;
     }
 
-    public void ColorLetter(int index, LetterState letterState)
+    public void ColorLetter(int index, LetterState letterState, WordType wordType = WordType.Normal)
     {
         int meshIndex = text.textInfo.characterInfo[index].materialReferenceIndex;
         int vertexIndex = text.textInfo.characterInfo[index].vertexIndex;
@@ -26,7 +26,18 @@ public class WordDisplay : MonoBehaviour
                 color = new Color32(255, 0, 0, 255);
                 break;
             case LetterState.Default:
-                color = new Color32(0, 0, 255, 255);
+                switch (wordType)
+                {
+                    case WordType.Normal:
+                        color = new Color32(255, 255, 255, 255);
+                        break;
+                    case WordType.Mask:
+                        color = new Color32(0, 214, 255, 255);
+                        break;
+                    case WordType.Disinfection:
+                        color = new Color32(255, 250, 0, 255);
+                        break;     
+                }
                 break;
         }
         vertexColors[vertexIndex + 0] = color;
@@ -36,21 +47,19 @@ public class WordDisplay : MonoBehaviour
         text.UpdateVertexData(TMP_VertexDataUpdateFlags.Colors32);
     }
 
-    public void DecolorWord()
-    {
-        text.color = Color.yellow;
-        text.color = Color.blue;
-    }
-
     public void ColorWord(WordType wordType)
     {
+        text.color = Color.black;
         switch (wordType)
         {
             case WordType.Mask:
-                text.color = Color.magenta;
+                text.color = new Color32(0, 214, 255, 255);
                 break;
             case WordType.Disinfection:
-                text.color = Color.yellow;
+                text.color = new Color32(255, 250, 0, 255);
+                break;
+            default:
+                text.color = new Color32(255, 255, 255, 255);
                 break;
         }
     }

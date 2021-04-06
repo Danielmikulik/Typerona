@@ -8,7 +8,7 @@ public class Word
     public int typeIndex { get; private set; }  
     private string typedWord;
     private List<LetterTyped> lettersTyped = new List<LetterTyped>();
-    public WordType wordType { get; private set; }
+    public WordType WordType { get; private set; }
 
     private WordDisplay display;
 
@@ -19,11 +19,11 @@ public class Word
 
         this.display = _display;
         this.display.SetWord(word);
-        this.wordType = _wordType;
+        this.WordType = _wordType;
 
-        if (this.wordType != WordType.Normal)
+        if (this.WordType != WordType.Normal)
         {
-            this.display.ColorWord(this.wordType);
+            this.display.ColorWord(this.WordType);
         }
     }
 
@@ -63,7 +63,7 @@ public class Word
         if (typeIndex > 0)
         {            
             typedWord = this.typedWord.Remove(this.typedWord.Length - 1);                     
-            display.ColorLetter(--typeIndex, LetterState.Default);
+            display.ColorLetter(--typeIndex, LetterState.Default, WordType);
         }
     }
 
@@ -72,7 +72,7 @@ public class Word
         lettersTyped.Clear();       
         typeIndex = 0;
         typedWord = "";        
-        display.DecolorWord();
+        display.ColorWord(WordType);
     }
 
     public WordTyped WordTyped()

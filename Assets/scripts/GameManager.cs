@@ -17,13 +17,13 @@ public class GameManager : MonoBehaviour
             gameEnded = true;
             GameOver.SetActive(true);
             wordManager.writeStats();
-            Invoke("Restart", 4);
+            Invoke("LoadGameOverScene", 4);
         }       
     }
 
-    public void Restart()
+    public void LoadGameOverScene()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        SceneManager.LoadScene("GameOver");
     }
 
     public void PostStats(Player playerStats) => StartCoroutine(PostData_Coroutine(playerStats));
@@ -31,12 +31,6 @@ public class GameManager : MonoBehaviour
     private IEnumerator PostData_Coroutine(Player playerStats)
     {
         string URL = "http://localhost/api/players";
-
-        //Player player = new Player();
-        //player.name = name;
-        //player.score = score;
-        //player.mistakes = mistakes;
-        //player.WPM = WPM;
         string jsonData = JsonUtility.ToJson(playerStats, true);
 
         Debug.Log(jsonData);
