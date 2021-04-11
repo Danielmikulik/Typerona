@@ -24,6 +24,7 @@ public class WordManager : MonoBehaviour
     private static int mistakeCount;
     private static float wpm;          //words typed per minute
     private int typedWords = 0;
+    private int withoutMistkeStreak = 0;
     private int multiplier = 1;
     [SerializeField]
     private float maskRate = 0.05f;
@@ -60,7 +61,7 @@ public class WordManager : MonoBehaviour
 
 
         WordType wordType = WordType.Normal;
-        float specialWord = UnityEngine.Random.value;           //probability if the word will be special (mask / disinfection)
+        float specialWord = UnityEngine.Random.value;           //probability that the word will be special (mask / disinfection)
 
         if (specialWord < maskRate)
         {
@@ -154,6 +155,7 @@ public class WordManager : MonoBehaviour
             wordTypingSequences.addSequence(typingSequence);
             DeleteWord();
             typedWords++;
+            withoutMistkeStreak++;
         }
     }
 
@@ -194,6 +196,7 @@ public class WordManager : MonoBehaviour
     {
         MistakeCount++;
         hasMistake = true;
+        withoutMistkeStreak = 0;
         multiplier = 1;
         MultiplierText.text = "MULTIPLIER 1x";
     }
@@ -207,7 +210,7 @@ public class WordManager : MonoBehaviour
 
         if (!hasMistake)
         {
-            if (multiplier < 5)
+            if (multiplier < 5 && withoutMistkeStreak % 3 == 0)
             {
                 multiplier++;
                 MultiplierText.text = "MULTIPLIER " + multiplier.ToString() + "x";              

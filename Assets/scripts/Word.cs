@@ -77,7 +77,7 @@ public class Word
 
     public WordTyped WordTyped()
     {        
-        bool wordTyped = (typeIndex >= word.Length && typedWord.Equals(word));        
+        bool wordTyped = (typedWord.Equals(word));        
         if (wordTyped)
         {
             display.RemoveWord();

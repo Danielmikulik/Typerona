@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Text;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
@@ -38,8 +37,7 @@ public class GameManager : MonoBehaviour
         using (UnityWebRequest request = UnityWebRequest.Post(URL, jsonData))
         {
             byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes(jsonData);
-            request.uploadHandler = (UploadHandler)new UploadHandlerRaw(jsonToSend);
-            //request.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
+            request.uploadHandler = (UploadHandler)new UploadHandlerRaw(jsonToSend);            
             request.SetRequestHeader("Content-Type", "application/json");
             Debug.Log("Uploading stats...");
             yield return request.SendWebRequest();

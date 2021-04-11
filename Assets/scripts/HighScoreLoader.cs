@@ -39,9 +39,9 @@ public class HighScoreLoader : MonoBehaviour
     public void processData(string json) 
     {
         PlayerData = JsonUtility.FromJson<PlayerData>(json);
-        foreach (Player player in PlayerData.players)
-        {
-            Debug.Log(player.name + " " + player.score + " " + player.mistakes + " " + player.WPM);
-        }
+        //foreach (Player player in PlayerData.players)
+        //{
+        //    Debug.Log(player.name + " " + player.score + " " + player.mistakes + " " + player.WPM);
+        //}
     }    
 }

@@ -6,7 +6,7 @@ public class VirusMovement : MonoBehaviour
     const float defaultLength = 5;
 
     [SerializeField]
-    private float speed = 0.2f;         //movement speed
+    private float speed = 0.1f;         //movement speed
     [SerializeField]
     private int wordLength;
     private Vector3 destination;        //destination point

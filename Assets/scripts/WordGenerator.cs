@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class WordGenerator : MonoBehaviour
+public class WordGenerator
 {
     private static string[] wordList = {   "chodník", "klávesnica", "strom", "ochrániť", "periodický",
                                     "pochmúrne", "majestátny", "skok", "pekný", "zranenie", "hudobný",

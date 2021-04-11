@@ -29,7 +29,7 @@ public class WordDisplay : MonoBehaviour
                 switch (wordType)
                 {
                     case WordType.Normal:
-                        color = new Color32(255, 255, 255, 255);
+                        color = new Color32(95, 0, 255, 255);
                         break;
                     case WordType.Mask:
                         color = new Color32(0, 214, 255, 255);
@@ -59,7 +59,7 @@ public class WordDisplay : MonoBehaviour
                 text.color = new Color32(255, 250, 0, 255);
                 break;
             default:
-                text.color = new Color32(255, 255, 255, 255);
+                text.color = new Color32(95, 0, 255, 255);
                 break;
         }
     }
