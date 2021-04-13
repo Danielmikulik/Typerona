@@ -10,7 +10,7 @@ public class WordGenerator
                                     "návod", "dlhý", "veliteľ", "otec", "signál", "spoľahlivý", "neúspešný",
                                     "vlasy", "reprezentatívny", "zem", "grep", "pyšná", "pocit",
                                     "zábavný", "prírastok", "tiché", "hrať", "podlaha", "početný",
-                                    "priateľ", "pizza", "budova", "organický", "minulosť", "stíšiť", "nezvyčaný",
+                                    "priateľ", "pizza", "budova", "organický", "minulosť", "stíšiť", "nezvyčajný",
                                     "mäkký", "analyzovať", "bedňa", "jednoduchý", "protest", "starostlivo",
                                     "spoločnosť", "hlava", "žena", "nedočkavý", "halda", "dramatický", "súčasnosť",
                                     "hriech", "krabica", "koláče", "úžasná", "koreň", "dostupné", "dážďovka", "vosk",

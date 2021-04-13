@@ -22,7 +22,7 @@ public class VirusMovement : MonoBehaviour
     private Vector3 startingScale;
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         wordLength = wordText.GetComponent<TextMeshProUGUI>().text.Length;
         speed = speed * (defaultLength / wordLength);
@@ -36,7 +36,7 @@ public class VirusMovement : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         if (transform.position.z <= Camera.main.transform.position.z + 3)
         {

@@ -10,7 +10,7 @@ public class HighScoreLoader : MonoBehaviour
     public PlayerData PlayerData { get; private set; }
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         StartCoroutine(getData());
     }

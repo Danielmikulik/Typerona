@@ -35,7 +35,7 @@ public class WordManager : MonoBehaviour
     private bool hasActiveWord;
     private List<Word> activeWords = new List<Word>();
 
-    public void Start()
+    private void Start()
     {
         Name = NameInput.Name;
     }
@@ -43,7 +43,7 @@ public class WordManager : MonoBehaviour
     public void AddWord()
     {
         string generatedWord;
-        bool duplicate;       //suggest that list of words already contains generated word
+        bool duplicate;       //true if  list of words already contains the generated word
         do
         {
             duplicate = false;
@@ -76,7 +76,7 @@ public class WordManager : MonoBehaviour
         words.Add(word);
     }
 
-    public void ClearList()
+    public void ClearWordList()
     {
         if (hasActiveWord)
         {
@@ -90,50 +90,81 @@ public class WordManager : MonoBehaviour
     {
         if (hasActiveWord)
         {            
-            if (activeWords.Count > 1)
+            //if (activeWords.Count > 1)
+            //{
+            bool foundCorrect = false;
+            bool foundMistake = false;
+            foreach (Word activeWord in activeWords)
             {
-                bool foundCorrect = false;
-                bool foundMistake = false;
-                foreach (Word activeWord in activeWords)
+                if (activeWord.GetNextLetter() == letter)
                 {
-                    if (activeWord.GetNextLetter() == letter)
-                    {
-                        activeWord.TypeLetter();
-                        foundCorrect = true;
-                    }
-                    else
-                    {
-                        activeWord.MisstypeLetter(letter);
-                        foundMistake = true;
-                    }
-                }
-
-                if (foundCorrect && foundMistake)
-                {
-                    for (int i = activeWords.Count - 1; i >= 0; i--)                    
-                    {
-                        if (activeWords[i].GetLastTypedLetter() != letter)
-                        {
-                            Debug.Log(activeWords[i].word);
-                            activeWords[i].Unselect();
-                            activeWords.RemoveAt(i);
-                        }
-                    }
-                }
-                else if (!foundCorrect && foundMistake) { MistakeMade(); }
-            }
-            else
-            {
-                if (activeWords[0].GetNextLetter() == letter)
-                {
-                    activeWords[0].TypeLetter();
+                    activeWord.TypeLetter();
+                    foundCorrect = true;
                 }
                 else
                 {
-                    activeWords[0].MisstypeLetter(letter);
-                    MistakeMade();
-                }           
+                    activeWord.MisstypeLetter(letter);
+                    foundMistake = true;
+                }
             }
+
+            if (foundCorrect && foundMistake)
+            {
+                for (int i = activeWords.Count - 1; i >= 0; i--)                    
+                {
+                    if (activeWords[i].GetLastTypedLetter() != letter)
+                    {
+                        Debug.Log(activeWords[i].word);
+                        activeWords[i].Unselect();
+                        activeWords.RemoveAt(i);
+                    }
+                }
+            }
+            else if (!foundCorrect && foundMistake) { MistakeMade(); }
+
+            //WordTyped typingSequence = activeWords[0].WordTyped();
+
+            //if (hasActiveWord && typingSequence != null)
+            //{
+            //    wordTypingSequences.addSequence(typingSequence);
+            //    DeleteWord();
+            //    typedWords++;
+            //    if (!hasMistake)
+            //    {
+            //        withoutMistkeStreak++;
+            //    }
+            //}
+
+
+            for (int i = 0; i < activeWords.Count; i++)
+            {
+                WordTyped typingSequence = activeWords[i].WordTyped();
+
+                if (hasActiveWord && typingSequence != null)
+                {
+                    wordTypingSequences.addSequence(typingSequence);
+                    DeleteWord(i);
+                    typedWords++;
+                    if (!hasMistake)
+                    {
+                        withoutMistkeStreak++;
+                    }
+                }
+            }
+
+            //}
+            //else
+            //{
+            //    if (activeWords[0].GetNextLetter() == letter)
+            //    {
+            //        activeWords[0].TypeLetter();
+            //    }
+            //    else
+            //    {
+            //        activeWords[0].MisstypeLetter(letter);
+            //        MistakeMade();
+            //    }           
+            //}
         }
         else
         {
@@ -146,17 +177,7 @@ public class WordManager : MonoBehaviour
                     word.TypeLetter();
                 }
             }
-        }
-       
-        WordTyped typingSequence = activeWords[0].WordTyped();
-
-        if (hasActiveWord && typingSequence != null)
-        {
-            wordTypingSequences.addSequence(typingSequence);
-            DeleteWord();
-            typedWords++;
-            withoutMistkeStreak++;
-        }
+        }            
     }
 
     public void CancelWordSelection()
@@ -184,6 +205,24 @@ public class WordManager : MonoBehaviour
         }
     }
 
+    public void RemoveWordDesrtoyedByMask(string wordToRemove)
+    {
+        Word deadWord = null;
+        foreach (Word word in words)
+        {
+            if (word.word.Equals(wordToRemove))
+            {
+                deadWord = word;
+                break;
+            }
+        }
+
+        if (!deadWord.hasDisplay())
+        {
+            words.Remove(deadWord);
+        }
+    }
+
     internal void writeStats()
     {
         WPM = typedWords / (Time.time / 60);
@@ -201,10 +240,9 @@ public class WordManager : MonoBehaviour
         MultiplierText.text = "MULTIPLIER 1x";
     }
 
-    private void DeleteWord()
-    {
-        hasActiveWord = false;
-        words.Remove(activeWords[0]);
+    private void DeleteWord(int activeIndex)
+    {       
+        words.Remove(activeWords[activeIndex]);       
         Score += multiplier;
         scoreText.text = "SCORE: " + Score.ToString();
 
@@ -221,7 +259,7 @@ public class WordManager : MonoBehaviour
             hasMistake = false;
         }
 
-        switch (activeWords[0].WordType)
+        switch (activeWords[activeIndex].WordType)
         {
             case WordType.Mask:
                 UseMask();
@@ -229,8 +267,16 @@ public class WordManager : MonoBehaviour
             case WordType.Disinfection:
                 StartCoroutine(Disinfect(1f));
                 break;
+            default:
+                break;
         }
-        activeWords.Clear();
+
+        activeWords.RemoveAt(activeIndex);
+
+        if (activeWords.Count < 1)
+        {
+            hasActiveWord = false;
+        }
     }
 
     private void UseMask()

@@ -21,6 +21,6 @@ public class Disinfection : MonoBehaviour
             GameObject virus = viruses[i];
             Destroy(virus);
         }
-        wordManager.ClearList();
+        wordManager.ClearWordList();
     }
 }

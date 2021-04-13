@@ -75,6 +75,11 @@ public class Word
         display.ColorWord(WordType);
     }
 
+    public bool hasDisplay()
+    {
+        return display is null;
+    }
+
     public WordTyped WordTyped()
     {        
         bool wordTyped = (typedWord.Equals(word));        
