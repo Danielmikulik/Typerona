@@ -59,6 +59,7 @@ public class VirusMovement : MonoBehaviour
 
     private void OnDestroy()
     {
+        FindObjectOfType<AudioManager>().Play("VirusPop");
         Instantiate(destroyParticles, transform.position, Quaternion.identity);
     }
 }

@@ -9,7 +9,7 @@ public class NameInput : MonoBehaviour
     public TMP_InputField nameInputField;
     public Button play;
     private const int nameLength = 7;
-    private string name;
+    //private string name;
 
     public static string Name { get; private set; }
 
@@ -26,8 +26,8 @@ public class NameInput : MonoBehaviour
         if (!nameInputField.text.Equals(""))
         {
             Name = nameInputField.text;
-            mainMenu.SetActive(true);
             InsertMenu.SetActive(false);
+            mainMenu.SetActive(true);           
         }
     }
 }

@@ -16,9 +16,9 @@ public class Player
     public float WPM;
     public WordsTypedLog wordSequences;
 
-    public Player(int score, int mistakes, float WPM, WordsTypedLog wordSequences, string name = "GUEST")
+    public Player(string name, int score, int mistakes, float WPM, WordsTypedLog wordSequences)
     {
-        this.name = name;
+        this.name = name != null ? name : "GUEST";
         this.score = score;
         this.mistakes = mistakes;
         this.WPM = WPM;

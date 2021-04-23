@@ -4,6 +4,7 @@ using System.Collections.Generic;
 [System.Serializable]
 public class Word
 {
+    private DateTime startTime = GameManager.StartTime;
     public string word;
     public int typeIndex { get; private set; }  
     private string typedWord;
@@ -89,5 +90,11 @@ public class Word
             return new WordTyped(word, lettersTyped);
         }
         return null;
+    }
+
+    private void AddToLog(char input)
+    {
+        //DateTime time = DateTime.Now - startTime;
+        //lettersTyped.Add(new LetterTyped(DateTime.Now.ToString("HH:mm:ss.ffffff"), letter.ToString()));
     }
 }

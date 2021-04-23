@@ -12,8 +12,10 @@ public class Disinfection : MonoBehaviour
 
     private IEnumerator<WaitForSeconds> Disinfect()
     {
+        AudioManager audioManager = FindObjectOfType<AudioManager>();
         WordManager wordManager = GameObject.FindGameObjectWithTag("WordManager").GetComponent<WordManager>();
-        Instantiate(particles);
+        audioManager.Play("Spray");
+        Instantiate(particles);        
         yield return new WaitForSeconds(particles.main.duration / 2);
         GameObject[] viruses = GameObject.FindGameObjectsWithTag("Virus");
         for (int i = 0; i < viruses.Length; i++)
@@ -22,5 +24,7 @@ public class Disinfection : MonoBehaviour
             Destroy(virus);
         }
         wordManager.ClearWordList();
+        yield return new WaitForSeconds(1.2f);
+        audioManager.Play("DisinfectionEmpty");
     }
 }

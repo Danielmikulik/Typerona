@@ -1,14 +1,22 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    private static bool uploadError;
+    private static DateTime startTime = DateTime.Now;
+ 
     public GameObject GameOver;
     public WordManager wordManager;
 
-    bool gameEnded = false;
+    private bool gameEnded = false;
+
+    public static bool UploadError { get; private set;}
+    public static DateTime StartTime { get; private set; }
+
     public void EndGame()
     {
         if (!gameEnded)
@@ -16,7 +24,7 @@ public class GameManager : MonoBehaviour
             gameEnded = true;
             GameOver.SetActive(true);
             wordManager.writeStats();
-            Invoke("LoadGameOverScene", 4);
+            Invoke("LoadGameOverScene", 5);
         }       
     }
 
@@ -44,6 +52,7 @@ public class GameManager : MonoBehaviour
             Debug.Log("Data sent");
             if (request.isNetworkError || request.isHttpError)
             {
+                UploadError = true;
                 Debug.Log(request.error);
             }
             else

@@ -226,7 +226,7 @@ public class WordManager : MonoBehaviour
     internal void writeStats()
     {
         WPM = typedWords / (Time.time / 60);
-        Player playerStats = new Player(Score, MistakeCount, WPM, wordTypingSequences, Name);
+        Player playerStats = new Player(Name, Score, MistakeCount, WPM, wordTypingSequences);
         FindObjectOfType<GameManager>().PostStats(playerStats);
     }
  
@@ -264,7 +264,7 @@ public class WordManager : MonoBehaviour
             case WordType.Mask:
                 UseMask();
                 break;
-            case WordType.Disinfection:
+            case WordType.Disinfection:         
                 StartCoroutine(Disinfect(1f));
                 break;
             default:
@@ -292,6 +292,7 @@ public class WordManager : MonoBehaviour
     private IEnumerator<WaitForSeconds> Disinfect(float waitTime)
     {             
         GameObject disinfection = Instantiate(disinfectionPrefab);
+        FindObjectOfType<AudioManager>().Play("SprayShake");
         yield return new WaitForSeconds(waitTime);
         disinfection.GetComponent<Disinfection>().DestroyAllViruses();
         yield return new WaitForSeconds(disinfection.GetComponent<Disinfection>().particles.main.duration);
