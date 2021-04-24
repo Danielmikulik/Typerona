@@ -175,8 +175,8 @@ MonoBehaviour:
   MultiplierText: {fileID: 932342378}
   maskPrefab: {fileID: 2909530396675887108, guid: 3bf67fa243396734dbca3d9af876b328, type: 3}
   disinfectionPrefab: {fileID: 446600619298700332, guid: ae577869cab8c364aad01d1f9b70159c, type: 3}
-  maskRate: 0.5
-  disinfectionRate: 0.3
+  maskRate: 0.03
+  disinfectionRate: 0.02
 --- !u!114 &92771041
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -533,7 +533,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!73398921 &550490094
 VFXRenderer:
   m_ObjectHideFlags: 2
@@ -541,7 +541,7 @@ VFXRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 550490093}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
@@ -1125,7 +1125,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: f19307957543ae347ba71d0b67c5b5eb, type: 3}
+  m_Sprite: {fileID: 21300000, guid: ab6ba5b2f3b22cd49b40914be3689a5b, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1221,7 +1221,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!73398921 &1470267620
 VFXRenderer:
   m_ObjectHideFlags: 2
@@ -1229,7 +1229,7 @@ VFXRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1470267619}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1

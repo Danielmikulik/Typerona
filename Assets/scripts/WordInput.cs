@@ -11,7 +11,7 @@ public class WordInput : MonoBehaviour
         {
             switch (letter)
             {
-                case (char)32:                              //input is spacebar
+                case (char)13:                              //input is enter
                     wordManager.CancelWordSelection();
                     break;
                 case (char)8:                               //input is backspace
