@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="FullSignature">
+  <Class Name="LetterTyped">
+    <Position X="0.75" Y="0.5" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAQA=</HashCode>
+      <FileName>Assets\scripts\LetterTyped.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WordTyped">
+    <Position X="0.75" Y="2.75" Width="3.75" />
+    <AssociationLine Name="Sequence" Type="LetterTyped">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="-2.115" Y="0.085" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAA=</HashCode>
+      <FileName>Assets\scripts\LetterTyped.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Field Name="Sequence" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="WordsTypedLog">
+    <Position X="0.75" Y="4.75" Width="3.25" />
+    <AssociationLine Name="typingSequences" Type="WordTyped">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="-2.49" Y="0.093" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAEAAAAAAAAAIAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\scripts\LetterTyped.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Field Name="typingSequences" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="PlayerData">
+    <Position X="6.5" Y="2.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAA=</HashCode>
+      <FileName>Assets\scripts\PlayerData.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Field Name="players" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="Player">
+    <Position X="5.25" Y="4" Width="5.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAgAAAAAAIAAAAAAgEAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\scripts\PlayerData.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="wordSequences" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Sound">
+    <Position X="1" Y="7.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAACAIAAAAAAAAAAAAEAAAgAAAAAAACAAA=</HashCode>
+      <FileName>Assets\scripts\Sound.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AudioManager">
+    <Position X="4" Y="7.75" Width="3.25" />
+    <TypeIdentifier>
+      <HashCode>AACAAAAAACAAAABAAAAAAAAAAABEAAAAgAAAAAAAAEA=</HashCode>
+      <FileName>Assets\scripts\AudioManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

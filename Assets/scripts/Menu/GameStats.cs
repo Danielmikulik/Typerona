@@ -5,7 +5,7 @@ public class GameStats : MonoBehaviour
 {
     public GameObject uploadErrorText;
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         transform.Find("valueScore").GetComponent<TextMeshProUGUI>().text = WordManager.Score.ToString();
         transform.Find("valueMistakesCount").GetComponent<TextMeshProUGUI>().text = WordManager.MistakeCount.ToString();
@@ -14,5 +14,10 @@ public class GameStats : MonoBehaviour
         {
             uploadErrorText.SetActive(true);
         }
+    }
+
+    private void OnApplicationQuit()
+    {
+        PlayerPrefs.Save();
     }
 }

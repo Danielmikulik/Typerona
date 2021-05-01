@@ -8,7 +8,7 @@ public class MaskProtection : MonoBehaviour
     public Slider wearTimeSlider;
     public TextMeshProUGUI healthText;
 
-    private const float MAX_WEAR_TIME = 50f;
+    private const float MAX_WEAR_TIME = 60f;
 
     private int health = 3;
     private float wearTime;

@@ -5,14 +5,14 @@ using UnityEngine;
 public class WordManager : MonoBehaviour
 {
     public List<Word> words;
-
+   
     public WordSpawner wordSpawner;
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI MultiplierText;
     public GameObject maskPrefab;
-
     public GameObject disinfectionPrefab;
 
+    private AudioManager audioManager;
     private WordsTypedLog wordTypingSequences = new WordsTypedLog();
 
     public string Name { get; private set; }
@@ -38,6 +38,7 @@ public class WordManager : MonoBehaviour
     private void Start()
     {
         Name = NameInput.Name;
+        audioManager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
     }
 
     public void AddWord()
@@ -90,8 +91,6 @@ public class WordManager : MonoBehaviour
     {
         if (hasActiveWord)
         {            
-            //if (activeWords.Count > 1)
-            //{
             bool foundCorrect = false;
             bool foundMistake = false;
             foreach (Word activeWord in activeWords)
@@ -100,11 +99,12 @@ public class WordManager : MonoBehaviour
                 {
                     activeWord.TypeLetter();
                     foundCorrect = true;
+                    audioManager.Play("KeyPress");
                 }
                 else
                 {
                     activeWord.MisstypeLetter(letter);
-                    foundMistake = true;
+                    foundMistake = true;                   
                 }
             }
 
@@ -120,21 +120,11 @@ public class WordManager : MonoBehaviour
                     }
                 }
             }
-            else if (!foundCorrect && foundMistake) { MistakeMade(); }
-
-            //WordTyped typingSequence = activeWords[0].WordTyped();
-
-            //if (hasActiveWord && typingSequence != null)
-            //{
-            //    wordTypingSequences.addSequence(typingSequence);
-            //    DeleteWord();
-            //    typedWords++;
-            //    if (!hasMistake)
-            //    {
-            //        withoutMistkeStreak++;
-            //    }
-            //}
-
+            else if (!foundCorrect && foundMistake) 
+            { 
+                MistakeMade();
+                audioManager.Play("KeyPressMistake");
+            }
 
             for (int i = 0; i < activeWords.Count; i++)
             {
@@ -151,20 +141,6 @@ public class WordManager : MonoBehaviour
                     }
                 }
             }
-
-            //}
-            //else
-            //{
-            //    if (activeWords[0].GetNextLetter() == letter)
-            //    {
-            //        activeWords[0].TypeLetter();
-            //    }
-            //    else
-            //    {
-            //        activeWords[0].MisstypeLetter(letter);
-            //        MistakeMade();
-            //    }           
-            //}
         }
         else
         {
@@ -172,10 +148,15 @@ public class WordManager : MonoBehaviour
             {
                 if (word.GetNextLetter() == letter)
                 {
+                    audioManager.Play("KeyPress");
                     this.activeWords.Add(word);
                     this.hasActiveWord = true;
                     word.TypeLetter();
                 }
+            }
+            if (!hasActiveWord)
+            {
+                audioManager.Play("KeyPressMistake");
             }
         }            
     }
@@ -219,6 +200,17 @@ public class WordManager : MonoBehaviour
 
         if (!deadWord.hasDisplay())
         {
+            if (activeWords.Contains(deadWord))
+            {
+                if (activeWords.Count == 1)
+                {
+                    CancelWordSelection();
+                }
+                else
+                {
+                    activeWords.Remove(deadWord);
+                }
+            }
             words.Remove(deadWord);
         }
     }

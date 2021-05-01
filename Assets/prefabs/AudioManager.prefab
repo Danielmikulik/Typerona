@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &1740502711437141270
+--- !u!1 &4895940711269977970
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,8 +8,8 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1740502711437141268}
-  - component: {fileID: 1740502711437141271}
+  - component: {fileID: 4895940711269977968}
+  - component: {fileID: 4895940711269977971}
   m_Layer: 0
   m_Name: AudioManager
   m_TagString: Untagged
@@ -17,13 +17,13 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1740502711437141268
+--- !u!4 &4895940711269977968
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1740502711437141270}
+  m_GameObject: {fileID: 4895940711269977970}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 411, y: 231.125, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -31,41 +31,48 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1740502711437141271
+--- !u!114 &4895940711269977971
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1740502711437141270}
+  m_GameObject: {fileID: 4895940711269977970}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7cf708f2c50cfef4c8fd7ed17ced2ce7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   sounds:
+  - name: KeyPress
+    loop: 0
+    clip: {fileID: 8300000, guid: 31538d68d207a27418158b4c5aca8d56, type: 3}
+    source: {fileID: 0}
+  - name: KeyPressMistake
+    loop: 0
+    clip: {fileID: 8300000, guid: f0bba6c5d17242b41b418498cc88e089, type: 3}
+    source: {fileID: 0}
   - name: VirusPop
+    loop: 0
     clip: {fileID: 8300000, guid: adccb8ec1b5b34b4a84eae270df10764, type: 3}
-    volume: 1
     source: {fileID: 0}
-    loop: 0
   - name: SprayShake
+    loop: 0
     clip: {fileID: 8300000, guid: 63773cece93c5584abb2dd64498da7f9, type: 3}
-    volume: 1
     source: {fileID: 0}
-    loop: 0
   - name: Spray
+    loop: 0
     clip: {fileID: 8300000, guid: a870bd6b4737c4c408c2bc33f2d504ae, type: 3}
-    volume: 1
     source: {fileID: 0}
-    loop: 0
   - name: DisinfectionEmpty
-    clip: {fileID: 8300000, guid: 9156bf8e04d88ef4da022cc402908f5f, type: 3}
-    volume: 1
-    source: {fileID: 0}
     loop: 0
-  - name: ThemeSound
-    clip: {fileID: 8300000, guid: 1d14836e37860f04eb41f35b875e58e4, type: 3}
-    volume: 1
+    clip: {fileID: 8300000, guid: 9156bf8e04d88ef4da022cc402908f5f, type: 3}
     source: {fileID: 0}
+  - name: ThemeSound
     loop: 1
+    clip: {fileID: 8300000, guid: cfd84327081d88c4e9e2e7a402a245ac, type: 3}
+    source: {fileID: 0}
+  - name: GameOver
+    loop: 0
+    clip: {fileID: 8300000, guid: 625a84f9876400446ab958b4f9ac16da, type: 3}
+    source: {fileID: 0}

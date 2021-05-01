@@ -20,7 +20,6 @@ public class WordGenerator
 
         string[] newWordList = File.ReadAllLines(filePath).ToArray();
 
-        //Debug.Log(newWordList.Count() + " -> " + newWordList.Distinct().Count());
         if (newWordList.Distinct().Count() >= 50)
         {
             if (newWordList.Distinct().Count() < newWordList.Length)

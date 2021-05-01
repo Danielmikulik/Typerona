@@ -42,7 +42,9 @@ public class Word
     {       
         if (typeIndex < word.Length)
         {
-            lettersTyped.Add(new LetterTyped(DateTime.Now.ToString("HH:mm:ss.ffffff"), word[typeIndex].ToString()));
+            TimeSpan timeSpan = DateTime.Now.Subtract(startTime);
+            string time = string.Format("{0:D2}:{1:D2}.{2:D3}", timeSpan.Minutes, timeSpan.Seconds, timeSpan.Milliseconds);
+            lettersTyped.Add(new LetterTyped(time, word[typeIndex].ToString()));
             this.typedWord += word[typeIndex];
             display.ColorLetter(typeIndex++, LetterState.Correct);            
         }       
@@ -50,7 +52,9 @@ public class Word
 
     public void MisstypeLetter(char letter)
     {
-        lettersTyped.Add(new LetterTyped(DateTime.Now.ToString("HH:mm:ss.ffffff"), letter.ToString()));
+        TimeSpan timeSpan = DateTime.Now.Subtract(startTime);
+        string time = string.Format("{0:D2}:{1:D2}.{2:D3}", timeSpan.Minutes, timeSpan.Seconds, timeSpan.Milliseconds);
+        lettersTyped.Add(new LetterTyped(time, letter.ToString()));
         if (typeIndex < word.Length)
         {           
             this.typedWord += letter;
@@ -60,7 +64,9 @@ public class Word
 
     public void DeleteTypedLetter()
     {
-        lettersTyped.Add(new LetterTyped(DateTime.Now.ToString("HH:mm:ss.ffffff"), '\b'.ToString()));
+        TimeSpan timeSpan = DateTime.Now.Subtract(startTime);
+        string time = string.Format("{0:D2}:{1:D2}.{2:D3}", timeSpan.Minutes, timeSpan.Seconds, timeSpan.Milliseconds);
+        lettersTyped.Add(new LetterTyped(time, '\b'.ToString()));
         if (typeIndex > 0)
         {            
             typedWord = this.typedWord.Remove(this.typedWord.Length - 1);                     

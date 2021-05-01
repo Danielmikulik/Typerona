@@ -8,7 +8,6 @@ public class NameInput : MonoBehaviour
     public GameObject InsertMenu;
     public TMP_InputField nameInputField;
     public Button play;
-    private const int nameLength = 7;
     //private string name;
 
     public static string Name { get; private set; }
@@ -17,15 +16,17 @@ public class NameInput : MonoBehaviour
     void Start()
     {
         nameInputField.Select();
-        nameInputField.characterLimit = nameLength;
-        play.onClick.AddListener(OnButtonClickHandler);
+        nameInputField.text = PlayerPrefs.GetString("name", Name);
+        nameInputField.caretPosition = nameInputField.text.Length;
+        play.onClick.AddListener(OnPlayButtonClickHandler);
     }
 
-    private void OnButtonClickHandler()
+    private void OnPlayButtonClickHandler()
     {
         if (!nameInputField.text.Equals(""))
         {
             Name = nameInputField.text;
+            PlayerPrefs.SetString("name", Name);
             InsertMenu.SetActive(false);
             mainMenu.SetActive(true);           
         }

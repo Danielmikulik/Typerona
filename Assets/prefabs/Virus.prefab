@@ -181,7 +181,7 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 35
+  m_fontStyle: 33
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -444,10 +444,16 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4535631212771271812, guid: a98081d7d4dbd8f4b9668ccdf26a7c28, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 2776883362029681608, guid: a98081d7d4dbd8f4b9668ccdf26a7c28, type: 3}
     - {fileID: 663806803363560285, guid: a98081d7d4dbd8f4b9668ccdf26a7c28, type: 3}
     - {fileID: 663806803363560274, guid: a98081d7d4dbd8f4b9668ccdf26a7c28, type: 3}
+    - {fileID: 4535631212771271812, guid: a98081d7d4dbd8f4b9668ccdf26a7c28, type: 3}
+    - {fileID: 9103129704343772855, guid: a98081d7d4dbd8f4b9668ccdf26a7c28, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: a98081d7d4dbd8f4b9668ccdf26a7c28, type: 3}
 --- !u!1 &7897583725798158022 stripped
 GameObject:

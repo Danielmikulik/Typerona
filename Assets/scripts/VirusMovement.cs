@@ -41,7 +41,7 @@ public class VirusMovement : MonoBehaviour
         if (transform.position.z <= Camera.main.transform.position.z + 3)
         {
             FindObjectOfType<GameManager>().EndGame();                       
-            Destroy(gameObject, 2f);          
+            Destroy(gameObject);          
         }
     }
 

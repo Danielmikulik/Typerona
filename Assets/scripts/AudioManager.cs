@@ -1,5 +1,4 @@
-﻿using UnityEngine.Audio;
-using System;
+﻿using System;
 using UnityEngine;
 
 public class AudioManager : MonoBehaviour {
@@ -27,7 +26,6 @@ public class AudioManager : MonoBehaviour {
         {
             sound.source = gameObject.AddComponent<AudioSource>();
             sound.source.clip = sound.clip;
-            sound.source.volume = sound.volume;
             sound.source.loop = sound.loop;
         }
     }
@@ -41,7 +39,7 @@ public class AudioManager : MonoBehaviour {
     {
         Sound s = Array.Find(sounds, sound => sound.name == name);
         if (s != null)
-        {
+        {           
             s.source.Play();
         }
     }
@@ -49,8 +47,9 @@ public class AudioManager : MonoBehaviour {
     public void ChangeMusicVolume(float volume)
     {
         Sound s = Array.Find(sounds, sound => sound.name == "ThemeSound");
+        //Debug.Log("pred " + s.source.volume);
         s.source.volume = volume;
-        s.volume = volume;
+        //Debug.Log("po " + s.source.volume);
     }
 
     public void ChangeSFXVolume(float volume)
@@ -60,7 +59,6 @@ public class AudioManager : MonoBehaviour {
             if (sound.name != "ThemeSound")
             {
                 sound.source.volume = volume;
-                //sound.volume = volume;
             }            
         }
     }

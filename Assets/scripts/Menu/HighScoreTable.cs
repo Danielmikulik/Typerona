@@ -5,33 +5,64 @@ public class HighScoreTable : MonoBehaviour
 {
     public GameObject tableHeader;
     public GameObject loadingError;
-   
+    public GameObject loading;
+
     private HighScoreLoader loader;
 
     public void OnEnable()
     {
         loader = FindObjectOfType<HighScoreLoader>();
-        Transform entryContainer = transform.Find("EntryContainer");
-        Transform entryTemplate = entryContainer.transform.Find("HighScoreEntry");
-
-        entryTemplate.gameObject.SetActive(false);
-
+        
         PlayerData highScores = loader.PlayerData;
 
         if (highScores is null)
         {
             tableHeader.SetActive(false);
-            loadingError.SetActive(true);
+            if (!loadingError.activeSelf)
+            {
+                loading.SetActive(true);
+            }            
             return;
         }
 
-        //Kontrola, či je aktívny komponent s textom o zlyhaní načítania dát.
+        /*//Kontrola, či je aktívny komponent s textom o zlyhaní načítania dát.
         //Môže nastať, ak pri prvom zobrazení dáta neboli načítané, ale pri druhom áno
         if (loadingError.activeSelf)
         {
             tableHeader.SetActive(true);
             loadingError.SetActive(false);
-        }
+        }*/
+
+        showHighScores(highScores);
+    }
+
+    public void showLoading()
+    {
+        tableHeader.SetActive(false);
+        //loadingError.SetActive(false);
+        loading.SetActive(true);
+    }
+
+    public void showLoadingError()
+    {
+        //tableHeader.SetActive(false);
+        loadingError.SetActive(true);
+        loading.SetActive(false);
+    }
+
+    public void showHighScores(PlayerData highScores)
+    {
+        //if (loadingError.activeSelf)
+        //{
+            tableHeader.SetActive(true);
+            //loadingError.SetActive(false);
+            loading.SetActive(false);
+        //}
+
+        Transform entryContainer = transform.Find("EntryContainer");
+        Transform entryTemplate = entryContainer.transform.Find("HighScoreEntry");
+
+        entryTemplate.gameObject.SetActive(false);
 
         float templateHeight = 28f;
         int index = 0;
@@ -42,7 +73,7 @@ public class HighScoreTable : MonoBehaviour
                 break;
             }
 
-            Debug.Log(player.name);
+            //Debug.Log(player.name);
             Transform entryTransform = Instantiate(entryTemplate, entryContainer);
             RectTransform entryRectTransform = entryTransform.GetComponent<RectTransform>();
             entryRectTransform.anchoredPosition = new Vector2(0, -templateHeight * index++);
