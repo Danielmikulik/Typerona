@@ -2368,8 +2368,8 @@ RectTransform:
   m_Children:
   - {fileID: 1782200268}
   - {fileID: 2075887149}
-  - {fileID: 1959382873}
   - {fileID: 1135343372}
+  - {fileID: 1959382873}
   - {fileID: 1752659654}
   - {fileID: 1881610286}
   m_Father: {fileID: 629144838}
@@ -2671,7 +2671,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &486029430
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2707,7 +2707,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainMenu: {fileID: 728248447}
-  InsertMenu: {fileID: 486029429}
+  insertMenu: {fileID: 486029429}
   nameInputField: {fileID: 196459094}
   play: {fileID: 1451753865}
 --- !u!1 &499648396
@@ -3563,7 +3563,6 @@ MonoBehaviour:
   resolutionDropdown: {fileID: 499648397}
   qualityDropdown: {fileID: 1100102158}
   fullscreen: {fileID: 2014684620}
-  audioManager: {fileID: 3540256912791752934}
 --- !u!1 &625994407
 GameObject:
   m_ObjectHideFlags: 0
@@ -4400,7 +4399,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &728248448
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4899,10 +4898,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 826880856}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b93415c367356f8409c6eb1e2d5b3ba7, type: 3}
+  m_Script: {fileID: 11500000, guid: fe96eca4396408f46940ad076fb29bf3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BackButton: {fileID: 826880858}
+  backButton: {fileID: 826880858}
+  resDropdown: {fileID: 499648398}
+  graphicsDropdown: {fileID: 1100102157}
 --- !u!1 &831434517
 GameObject:
   m_ObjectHideFlags: 0
@@ -6327,7 +6328,7 @@ RectTransform:
   m_Children:
   - {fileID: 1158535083}
   m_Father: {fileID: 451487665}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -6970,7 +6971,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de2833f7af98ad14797009a693099bf7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scrollArea: {fileID: 628185424}
+  scrollBar: {fileID: 628185424}
 --- !u!1 &1300691166
 GameObject:
   m_ObjectHideFlags: 0
@@ -7642,7 +7643,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 035f13d2c07acde45999ad46ed4887a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audioManager: {fileID: 3540256912791752934}
 --- !u!1 &1482031850
 GameObject:
   m_ObjectHideFlags: 0
@@ -8038,7 +8038,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b93415c367356f8409c6eb1e2d5b3ba7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BackButton: {fileID: 1511739783}
+  backButton: {fileID: 1511739783}
 --- !u!114 &1511739783
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8801,7 +8801,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1752659654
 RectTransform:
   m_ObjectHideFlags: 0
@@ -9539,7 +9539,7 @@ RectTransform:
   m_Children:
   - {fileID: 2128152634}
   m_Father: {fileID: 451487665}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -9663,7 +9663,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b93415c367356f8409c6eb1e2d5b3ba7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BackButton: {fileID: 1959382874}
+  backButton: {fileID: 1959382874}
 --- !u!1 &1992522130
 GameObject:
   m_ObjectHideFlags: 0
@@ -10818,17 +10818,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2128152633}
   m_CullTransparentMesh: 0
---- !u!114 &3540256912791752934 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4895940711269977971, guid: 5aa7936e56729e244910eea4ad26ceb7, type: 3}
-  m_PrefabInstance: {fileID: 8273223311342444437}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7cf708f2c50cfef4c8fd7ed17ced2ce7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &8273223311342444437
 PrefabInstance:
   m_ObjectHideFlags: 0

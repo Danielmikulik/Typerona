@@ -2,10 +2,10 @@
 
 public class ParticleDestroy : MonoBehaviour
 {
-    public ParticleSystem particles;
+    [SerializeField] private ParticleSystem particles;
     // Start is called before the first frame update
     private void Start()
     {
-        Destroy(gameObject, particles.main.duration);
+        Destroy(gameObject, particles.main.duration);   //destroys particle gameObject after the animation
     }
 }

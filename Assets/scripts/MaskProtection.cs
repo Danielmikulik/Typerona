@@ -5,8 +5,8 @@ using UnityEngine.UI;
 public class MaskProtection : MonoBehaviour
 {
 
-    public Slider wearTimeSlider;
-    public TextMeshProUGUI healthText;
+    [SerializeField] private Slider wearTimeSlider;
+    [SerializeField] private TextMeshProUGUI healthText;
 
     private const float MAX_WEAR_TIME = 60f;
 
@@ -31,15 +31,15 @@ public class MaskProtection : MonoBehaviour
     }
 
     private void OnTriggerEnter(Collider other)
-    {
-        if (other.tag == "Virus")
+    {       
+        if (other.CompareTag("Virus")) //colliding object is a virus
         {
             health--;
             healthText.text = health.ToString();
             WordManager wordManager = GameObject.FindGameObjectWithTag("WordManager").GetComponent<WordManager>();
             string word = other.gameObject.transform.GetChild(1).GetChild(0).GetComponent<TextMeshProUGUI>().text;
-            wordManager.RemoveWordDesrtoyedByMask(word);
-            Destroy(other.gameObject);
+            wordManager.RemoveWordDesrtoyedByMask(word);    //so that it doesn't stay in wordList
+            Destroy(other.gameObject);  //destroys the virus
             if (health <= 0)
             {
                 Destroy(gameObject);

@@ -3,18 +3,14 @@ using UnityEngine.UI;
 
 public class BackButtonUI : MonoBehaviour
 {
-    public Button BackButton;
+    [SerializeField] private Button backButton;
 
-    // Update is called once per frame
     void Update()
     {
+        //press BackButton on ESC keypress
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (true)
-            {
-
-            }
-            BackButton.onClick.Invoke();
+            backButton.onClick.Invoke();          
         }
     }
 }

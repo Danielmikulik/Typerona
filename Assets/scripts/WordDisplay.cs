@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class WordDisplay : MonoBehaviour
 {
-    public TextMeshProUGUI text;
+    [SerializeField] private TextMeshProUGUI text;
 
     public void SetWord(string word)
     {
@@ -12,6 +12,7 @@ public class WordDisplay : MonoBehaviour
 
     public void ColorLetter(int index, LetterState letterState, WordType wordType = WordType.Normal)
     {
+        //access to the color of desired letter
         int meshIndex = text.textInfo.characterInfo[index].materialReferenceIndex;
         int vertexIndex = text.textInfo.characterInfo[index].vertexIndex;
         Color32[] vertexColors = text.textInfo.meshInfo[meshIndex].colors32;
@@ -44,7 +45,7 @@ public class WordDisplay : MonoBehaviour
         vertexColors[vertexIndex + 1] = color;
         vertexColors[vertexIndex + 2] = color;
         vertexColors[vertexIndex + 3] = color;
-        text.UpdateVertexData(TMP_VertexDataUpdateFlags.Colors32);
+        text.UpdateVertexData(TMP_VertexDataUpdateFlags.Colors32);      //update to see the change in the game
     }
 
     public void ColorWord(WordType wordType)

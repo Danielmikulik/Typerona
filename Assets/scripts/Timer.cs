@@ -2,10 +2,10 @@
 
 public class Timer : MonoBehaviour
 {
-    public WordManager wordManager;
+    [SerializeField] private WordManager wordManager;
 
-    [SerializeField]
-    private float wordDelay = 2.5f;
+    [SerializeField] private float wordDelay = 2.5f;    //delay between virus spawns
+
     private float nextWordTime = 0.1f;
     // Update is called once per frame
     private void Update()

@@ -5,23 +5,24 @@ using TMPro;
 
 public class OptionsMenu : MonoBehaviour
 {
-    public Slider musicVolumeSlider;
-    public Slider SFXVolumeSlider;
-    public TMP_Dropdown resolutionDropdown;
-    public TMP_Dropdown qualityDropdown;
-    public Toggle fullscreen;
-    public AudioManager audioManager;
+    [SerializeField] private Slider musicVolumeSlider;
+    [SerializeField] private Slider SFXVolumeSlider;
+    [SerializeField] private TMP_Dropdown resolutionDropdown;
+    [SerializeField] private TMP_Dropdown qualityDropdown;
+    [SerializeField] private Toggle fullscreen;
+    private AudioManager audioManager;
 
     private Resolution[] resolutions;
 
     private void Start()
     {
+        audioManager = AudioManager.Instance; 
+
+        //making UI match the last used settings
         QualitySettings.SetQualityLevel(PlayerPrefs.GetInt("quality"));
-        //Debug.Log(PlayerPrefs.GetInt("quality"));
         qualityDropdown.value = PlayerPrefs.HasKey("quality") ? PlayerPrefs.GetInt("quality") : QualitySettings.GetQualityLevel();       
 
         fullscreen.isOn = (PlayerPrefs.GetInt("fullscreen") == 1);
-        //Debug.Log(PlayerPrefs.GetInt("fullscreen"));
         Screen.fullScreen = fullscreen.isOn;
         
         resolutions = Screen.resolutions;
@@ -29,6 +30,7 @@ public class OptionsMenu : MonoBehaviour
 
         List<string> options = new List<string>();
 
+        //filling the resolution dropdown with device supported resolutions and refresh rates
         int currentResIndex = 0;
         for (int i = 0; i < resolutions.Length; i++)
         {

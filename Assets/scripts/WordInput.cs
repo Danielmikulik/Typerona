@@ -2,7 +2,7 @@
 
 public class WordInput : MonoBehaviour
 {
-    public WordManager wordManager;
+    [SerializeField] private WordManager wordManager;
 
     // Update is called once per frame
     private void Update()

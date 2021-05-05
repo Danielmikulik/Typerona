@@ -1,18 +1,22 @@
 ﻿using System;
+using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class AudioManager : MonoBehaviour {
 
-    public Sound[] sounds;
+    [SerializeField] private Sound[] sounds;
 
-    public static AudioManager instance;
+    //singleton
+    private static AudioManager instance;
 
-    // Start is called before the first frame update
+    public static AudioManager Instance { get => instance; set => instance = value; }
+
     private void Awake()
     {
-        if (instance == null)
-        {
-            instance = this;
+        if (Instance == null)
+        {           
+            Instance = this;
         }
         else
         {
@@ -22,6 +26,7 @@ public class AudioManager : MonoBehaviour {
 
         DontDestroyOnLoad(gameObject);
 
+        //create sound sources for each sound
         foreach (Sound sound in sounds)
         {
             sound.source = gameObject.AddComponent<AudioSource>();
@@ -47,9 +52,13 @@ public class AudioManager : MonoBehaviour {
     public void ChangeMusicVolume(float volume)
     {
         Sound s = Array.Find(sounds, sound => sound.name == "ThemeSound");
-        //Debug.Log("pred " + s.source.volume);
         s.source.volume = volume;
-        //Debug.Log("po " + s.source.volume);
+    }
+
+    public void IncreaseMusicVolumeGradually(float volume)
+    {
+        Sound s = Array.Find(sounds, sound => sound.name == "ThemeSound");
+        StartCoroutine(IncreaseMusicVolumeGradually_Coroutine(s.source, volume));
     }
 
     public void ChangeSFXVolume(float volume)
@@ -61,5 +70,14 @@ public class AudioManager : MonoBehaviour {
                 sound.source.volume = volume;
             }            
         }
+    }
+
+    private IEnumerator IncreaseMusicVolumeGradually_Coroutine(AudioSource source, float musicVolume)
+    {
+        while (source.volume < musicVolume)
+        {
+            source.volume += 0.002f;
+            yield return null;
+        }       
     }
 }

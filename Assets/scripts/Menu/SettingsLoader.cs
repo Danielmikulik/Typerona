@@ -3,10 +3,13 @@
 public class SettingsLoader : MonoBehaviour
 {
 
-    public AudioManager audioManager;
-    // Start is called before the first frame update
-    void Start()
+    private AudioManager audioManager;
+
+    private void Start()
     {
+        audioManager = AudioManager.Instance;
+
+        //setting game to last used settings
         QualitySettings.SetQualityLevel(PlayerPrefs.GetInt("quality"));
         Screen.fullScreen = (PlayerPrefs.GetInt("fullscreen") == 1);
         if (PlayerPrefs.HasKey("resolution"))
@@ -26,4 +29,8 @@ public class SettingsLoader : MonoBehaviour
         }
     }
 
+    private void OnApplicationQuit()
+    {
+        PlayerPrefs.Save();
+    }
 }

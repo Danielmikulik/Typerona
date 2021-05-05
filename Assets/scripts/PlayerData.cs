@@ -13,7 +13,7 @@ public class Player
     public string name;
     public int score;
     public int mistakes;
-    public float WPM;
+    public float WPM;   //words per minute
     public WordsTypedLog wordSequences;
 
     public Player(string name, int score, int mistakes, float WPM, WordsTypedLog wordSequences)

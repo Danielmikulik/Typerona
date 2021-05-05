@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class WordGenerator
 {
-    private static string[] wordList = SetWordList();
+    private static string[] wordList = SetWordList();   //list of words used in game
 
     public static string GetRandomWord()
 	{
@@ -18,9 +18,9 @@ public class WordGenerator
     {
         string filePath = Application.streamingAssetsPath + "/WordList" + ".txt";
 
-        string[] newWordList = File.ReadAllLines(filePath).ToArray();
+        string[] newWordList = File.ReadAllLines(filePath).ToArray();   //in file, there's one word at a line
 
-        if (newWordList.Distinct().Count() >= 50)
+        if (newWordList.Distinct().Count() >= 50)   //file must contain at least 50 distinct words. With too few words, the game might crash
         {
             if (newWordList.Distinct().Count() < newWordList.Length)
             {
@@ -29,12 +29,13 @@ public class WordGenerator
 
             for (int i = 0; i < newWordList.Length; i++)
             {
-                newWordList[i] = newWordList[i].Trim();
+                newWordList[i] = newWordList[i].Trim();     //trims whitespaces at the begining or end of line
             }   
             
             return newWordList;          
         }
 
+        //if the num of distinct words in file is too low, backup list is used
         return new string[] {   "chodník", "klávesnica", "strom", "ochrániť", "periodický",
                                 "pochmúrne", "majestátny", "skok", "pekný", "zranenie", "hudobný",
                                 "pamäť", "pripojiť", "prasklina", "známka", "topánka", "oblačno", "chorý",

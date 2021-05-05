@@ -3,9 +3,9 @@ using UnityEngine;
 
 public class HighScoreTable : MonoBehaviour
 {
-    public GameObject tableHeader;
-    public GameObject loadingError;
-    public GameObject loading;
+    [SerializeField] private GameObject tableHeader;
+    [SerializeField] private GameObject loadingError;   //Text saying there's been an error
+    [SerializeField] private GameObject loading;    //Text saying that data is being downloaded
 
     private HighScoreLoader loader;
 
@@ -15,56 +15,50 @@ public class HighScoreTable : MonoBehaviour
         
         PlayerData highScores = loader.PlayerData;
 
-        if (highScores is null)
+        if (highScores is null) //data not loaded
         {
             tableHeader.SetActive(false);
-            if (!loadingError.activeSelf)
+            if (!loadingError.activeSelf)   //there's no error yet, so the data may be loading
             {
                 loading.SetActive(true);
             }            
             return;
         }
 
-        /*//Kontrola, či je aktívny komponent s textom o zlyhaní načítania dát.
-        //Môže nastať, ak pri prvom zobrazení dáta neboli načítané, ale pri druhom áno
-        if (loadingError.activeSelf)
-        {
-            tableHeader.SetActive(true);
-            loadingError.SetActive(false);
-        }*/
-
-        showHighScores(highScores);
+        ShowHighScores(highScores);
     }
 
-    public void showLoading()
+    public void ShowLoading()
     {
         tableHeader.SetActive(false);
-        //loadingError.SetActive(false);
         loading.SetActive(true);
     }
 
-    public void showLoadingError()
+    public void ShowLoadingError()
     {
-        //tableHeader.SetActive(false);
         loadingError.SetActive(true);
         loading.SetActive(false);
     }
 
-    public void showHighScores(PlayerData highScores)
+    public void ShowHighScores(PlayerData highScores)
     {
-        //if (loadingError.activeSelf)
-        //{
+        if (loading.activeSelf)
+        {
             tableHeader.SetActive(true);
-            //loadingError.SetActive(false);
             loading.SetActive(false);
-        //}
+        }
 
-        Transform entryContainer = transform.Find("EntryContainer");
-        Transform entryTemplate = entryContainer.transform.Find("HighScoreEntry");
+        Transform entryContainer = transform.Find("EntryContainer");    //container for high score entries
+        Transform entryTemplate = entryContainer.transform.Find("HighScoreEntry");   //template for high score entries
+
+        if (entryContainer.childCount > 1)  //table already contains data;
+        {
+            return;
+        }
 
         entryTemplate.gameObject.SetActive(false);
 
-        float templateHeight = 28f;
+        float templateHeight = 28f;     //vertical space between entries
         int index = 0;
         foreach (Player player in highScores.players)
         {
@@ -73,10 +67,9 @@ public class HighScoreTable : MonoBehaviour
                 break;
             }
 
-            //Debug.Log(player.name);
             Transform entryTransform = Instantiate(entryTemplate, entryContainer);
             RectTransform entryRectTransform = entryTransform.GetComponent<RectTransform>();
-            entryRectTransform.anchoredPosition = new Vector2(0, -templateHeight * index++);
+            entryRectTransform.anchoredPosition = new Vector2(0, -templateHeight * index++);    //moving the entry transform down
 
             entryTransform.Find("posText").GetComponent<TextMeshProUGUI>().text = index.ToString();
             entryTransform.Find("nameText").GetComponent<TextMeshProUGUI>().text = player.name;

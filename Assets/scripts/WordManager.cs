@@ -4,54 +4,50 @@ using UnityEngine;
 
 public class WordManager : MonoBehaviour
 {
-    public List<Word> words;
-   
-    public WordSpawner wordSpawner;
-    public TextMeshProUGUI scoreText;
-    public TextMeshProUGUI MultiplierText;
-    public GameObject maskPrefab;
-    public GameObject disinfectionPrefab;
+    [SerializeField] private List<Word> wordList;           //list of words on the scene
+
+    [SerializeField] private WordSpawner wordSpawner;
+    [SerializeField] private TextMeshProUGUI scoreText;
+    [SerializeField] private TextMeshProUGUI MultiplierText;
+    [SerializeField] private GameObject maskPrefab;
+    [SerializeField] private GameObject disinfectionPrefab;
 
     private AudioManager audioManager;
-    private WordsTypedLog wordTypingSequences = new WordsTypedLog();
+    private WordsTypedLog wordTypingSequences = new WordsTypedLog();   //type sequences of all typed words
 
+    private int typedWords = 0;
+    private int withoutMistkeStreak = 0;
+    private int multiplier = 1;     //score multiplier for word typing
+    [SerializeField] private float maskRate = 0.03f;            //chance to spawn mask
+    [SerializeField] private float disinfectionRate = 0.02f;    //chance to spawn disinfection
+    
+    private bool hasMistake;              //word being typed has a mistake
+    private bool hasActiveWord;
+    private List<Word> activeWords = new List<Word>();      //list of words that start with same letter sequence as the one being typed
+
+    //palyer stats
     public string Name { get; private set; }
     public static int Score { get; private set; }
     public static int MistakeCount { get; private set; }
     public static float WPM { get; private set; }
 
-    private static int score;
-    private static int mistakeCount;
-    private static float wpm;          //words typed per minute
-    private int typedWords = 0;
-    private int withoutMistkeStreak = 0;
-    private int multiplier = 1;
-    [SerializeField]
-    private float maskRate = 0.05f;
-    [SerializeField]
-    private float disinfectionRate = 0.03f;
-    
-    private bool hasMistake;
-    private bool hasActiveWord;
-    private List<Word> activeWords = new List<Word>();
-
     private void Start()
     {
         Name = NameInput.Name;
-        audioManager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
+        audioManager = AudioManager.Instance;
     }
 
     public void AddWord()
     {
         string generatedWord;
-        bool duplicate;       //true if  list of words already contains the generated word
+        bool duplicate;       //true if list of words already contains the generated word
         do
         {
             duplicate = false;
             generatedWord = WordGenerator.GetRandomWord();
-            foreach (Word wordOnScene in words)
+            foreach (Word wordOnScene in wordList)
             {
-                if (wordOnScene.word.Equals(generatedWord))
+                if (wordOnScene.WordText.Equals(generatedWord))
                 {
                     duplicate = true;                    
                     break;
@@ -60,9 +56,8 @@ public class WordManager : MonoBehaviour
 
         } while (duplicate);
 
-
         WordType wordType = WordType.Normal;
-        float specialWord = UnityEngine.Random.value;           //probability that the word will be special (mask / disinfection)
+        float specialWord = Random.value;           //probability that the word will be special (mask / disinfection)
 
         if (specialWord < maskRate)
         {
@@ -74,7 +69,7 @@ public class WordManager : MonoBehaviour
         }
 
         Word word = new Word(generatedWord, wordSpawner.SpawnWord(), wordType);
-        words.Add(word);
+        wordList.Add(word);
     }
 
     public void ClearWordList()
@@ -82,9 +77,9 @@ public class WordManager : MonoBehaviour
         if (hasActiveWord)
         {
             hasActiveWord = false;
-            activeWords.Clear();
+            activeWords.Clear();    //deactivates active words
         }
-        words.Clear();
+        wordList.Clear();
     }
 
     public void TypeLetter(char letter)
@@ -110,11 +105,12 @@ public class WordManager : MonoBehaviour
 
             if (foundCorrect && foundMistake)
             {
+                //unselect those active words which have next letter different than the letter typed
                 for (int i = activeWords.Count - 1; i >= 0; i--)                    
                 {
                     if (activeWords[i].GetLastTypedLetter() != letter)
                     {
-                        Debug.Log(activeWords[i].word);
+                        Debug.Log(activeWords[i].WordText);
                         activeWords[i].Unselect();
                         activeWords.RemoveAt(i);
                     }
@@ -128,9 +124,9 @@ public class WordManager : MonoBehaviour
 
             for (int i = 0; i < activeWords.Count; i++)
             {
-                WordTyped typingSequence = activeWords[i].WordTyped();
+                WordTyped typingSequence = activeWords[i].WordTyped();  //checks if the word is typed
 
-                if (hasActiveWord && typingSequence != null)
+                if (typingSequence != null)     //word is typed
                 {
                     wordTypingSequences.addSequence(typingSequence);
                     DeleteWord(i);
@@ -142,13 +138,18 @@ public class WordManager : MonoBehaviour
                 }
             }
         }
-        else
+        else    //if no word is active
         {
-            foreach (Word word in words)
+            foreach (Word word in wordList)
             {
+                bool wordFound = false;
                 if (word.GetNextLetter() == letter)
                 {
-                    audioManager.Play("KeyPress");
+                    if (!wordFound)
+                    {
+                        audioManager.Play("KeyPress");
+                        wordFound = true;
+                    }                   
                     this.activeWords.Add(word);
                     this.hasActiveWord = true;
                     word.TypeLetter();
@@ -179,8 +180,14 @@ public class WordManager : MonoBehaviour
     {
         if (hasActiveWord)
         {
+            bool wordFound = false;
             foreach (Word activeWord in activeWords)
             {
+                if (!wordFound)
+                {
+                    audioManager.Play("KeyPress");
+                    wordFound = true;
+                }
                 activeWord.DeleteTypedLetter();
             }
         }
@@ -189,16 +196,16 @@ public class WordManager : MonoBehaviour
     public void RemoveWordDesrtoyedByMask(string wordToRemove)
     {
         Word deadWord = null;
-        foreach (Word word in words)
+        foreach (Word word in wordList)
         {
-            if (word.word.Equals(wordToRemove))
+            if (word.WordText.Equals(wordToRemove))
             {
                 deadWord = word;
                 break;
             }
         }
 
-        if (!deadWord.hasDisplay())
+        if (!deadWord.HasDisplay())     //virus is destroyed on the scene
         {
             if (activeWords.Contains(deadWord))
             {
@@ -211,11 +218,11 @@ public class WordManager : MonoBehaviour
                     activeWords.Remove(deadWord);
                 }
             }
-            words.Remove(deadWord);
+            wordList.Remove(deadWord);
         }
     }
 
-    internal void writeStats()
+    internal void WriteStats()
     {
         WPM = typedWords / (Time.time / 60);
         Player playerStats = new Player(Name, Score, MistakeCount, WPM, wordTypingSequences);
@@ -234,13 +241,13 @@ public class WordManager : MonoBehaviour
 
     private void DeleteWord(int activeIndex)
     {       
-        words.Remove(activeWords[activeIndex]);       
+        wordList.Remove(activeWords[activeIndex]);       
         Score += multiplier;
         scoreText.text = "SCORE: " + Score.ToString();
 
         if (!hasMistake)
         {
-            if (multiplier < 5 && withoutMistkeStreak % 3 == 0)
+            if (multiplier < 5 && withoutMistkeStreak % 3 == 0)     //multiplier is incremented after every 3 words without mistake and stacks up to 5
             {
                 multiplier++;
                 MultiplierText.text = "MULTIPLIER " + multiplier.ToString() + "x";              
@@ -257,7 +264,7 @@ public class WordManager : MonoBehaviour
                 UseMask();
                 break;
             case WordType.Disinfection:         
-                StartCoroutine(Disinfect(1f));
+                StartCoroutine(Disinfect());
                 break;
             default:
                 break;
@@ -281,13 +288,13 @@ public class WordManager : MonoBehaviour
         Instantiate(maskPrefab);
     }
 
-    private IEnumerator<WaitForSeconds> Disinfect(float waitTime)
+    private IEnumerator<WaitForSeconds> Disinfect()
     {             
         GameObject disinfection = Instantiate(disinfectionPrefab);
-        FindObjectOfType<AudioManager>().Play("SprayShake");
-        yield return new WaitForSeconds(waitTime);
+        audioManager.Play("SprayShake");
+        yield return new WaitForSeconds(1f); //waits for animation to end
         disinfection.GetComponent<Disinfection>().DestroyAllViruses();
-        yield return new WaitForSeconds(disinfection.GetComponent<Disinfection>().particles.main.duration);
+        yield return new WaitForSeconds(disinfection.GetComponent<Disinfection>().Particles.main.duration);     //waits for particle animation to end
         Destroy(disinfection);
     }
 }

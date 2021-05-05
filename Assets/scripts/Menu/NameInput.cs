@@ -4,31 +4,31 @@ using UnityEngine.UI;
 
 public class NameInput : MonoBehaviour
 {
-    public GameObject mainMenu;
-    public GameObject InsertMenu;
-    public TMP_InputField nameInputField;
-    public Button play;
-    //private string name;
+    [SerializeField] private GameObject mainMenu;
+    [SerializeField] private GameObject insertMenu;
+    [SerializeField] private TMP_InputField nameInputField;
+    [SerializeField] private Button play;
 
     public static string Name { get; private set; }
 
-    // Start is called before the first frame update
     void Start()
     {
         nameInputField.Select();
-        nameInputField.text = PlayerPrefs.GetString("name", Name);
-        nameInputField.caretPosition = nameInputField.text.Length;
+        nameInputField.text = PlayerPrefs.GetString("name", Name);  //prefilling name input field
+        nameInputField.caretPosition = nameInputField.text.Length;  //setting carret (cursor) to the end of name
         play.onClick.AddListener(OnPlayButtonClickHandler);
     }
 
     private void OnPlayButtonClickHandler()
     {
-        if (!nameInputField.text.Equals(""))
+        if ((string.IsNullOrWhiteSpace(nameInputField.text)))
         {
-            Name = nameInputField.text;
-            PlayerPrefs.SetString("name", Name);
-            InsertMenu.SetActive(false);
-            mainMenu.SetActive(true);           
+            return;
         }
+
+        Name = nameInputField.text;
+        PlayerPrefs.SetString("name", Name);
+        insertMenu.SetActive(false);
+        mainMenu.SetActive(true);                  
     }
 }

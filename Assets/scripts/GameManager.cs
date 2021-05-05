@@ -10,17 +10,19 @@ public class GameManager : MonoBehaviour
     public static bool UploadError { get; private set; }
     public static DateTime StartTime { get; private set; }
 
-    private static bool uploadError;
-    private static DateTime startTime;
- 
-    public GameObject GameOver;
-    public WordManager wordManager;
+
+    [SerializeField] private GameObject gameOver;
+    [SerializeField] private WordManager wordManager;
 
     private bool gameEnded = false;
+    private float musicVolume;
+    private readonly float dampenedMusicVolume = 0.08f;
+    private AudioManager audioManager;
 
     private void Start()
     {
         StartTime = DateTime.Now;
+        audioManager = AudioManager.Instance;
     }
 
     private void OnApplicationQuit()
@@ -32,42 +34,34 @@ public class GameManager : MonoBehaviour
     {
         if (!gameEnded)
         {
-            AudioManager audioManager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
-            /*float musicVolume = PlayerPrefs.GetFloat("musicVolume");
-            if (musicVolume > 0.1f)
+            musicVolume = PlayerPrefs.HasKey("musicVolume") ? PlayerPrefs.GetFloat("musicVolume") : 0.25f;
+            float SFXVolume = PlayerPrefs.HasKey("SFXVolume") ? PlayerPrefs.GetFloat("SFXVolume") : 1;
+            if (musicVolume > dampenedMusicVolume && SFXVolume > dampenedMusicVolume)
             {
-                Debug.Log("menim " + musicVolume);
-                audioManager.ChangeMusicVolume(0.1f);
-            }*/
+                audioManager.ChangeMusicVolume(dampenedMusicVolume); //dampen music volume, to not interfere with GameOver sound
+            }
+
             audioManager.Play("GameOver");
 
             gameEnded = true;
-            GameOver.SetActive(true);
+            gameOver.SetActive(true);
 
-            wordManager.writeStats();
+            wordManager.WriteStats();
 
+            //destroy all viruses on the scene
             GameObject[] viruses = GameObject.FindGameObjectsWithTag("Virus");
             foreach (GameObject virus in viruses)
             {
                 virus.GetComponent<VirusMovement>().enabled = false;
             }
 
-            Invoke("LoadGameOverScene", 5);
-
-            /*if (musicVolume > 0.1)
-            {
-                audioManager.ChangeMusicVolume(musicVolume);
-            }  */         
+            Invoke(nameof(LoadGameOverScene), 5);
+            Invoke(nameof(RevertMusicVolume), 4);
         }       
     }
 
-    public void LoadGameOverScene()
-    {
-        SceneManager.LoadScene("GameOver");
-    }
-
     public void PostStats(Player playerStats) => StartCoroutine(PostData_Coroutine(playerStats));
-
+ 
     private IEnumerator PostData_Coroutine(Player playerStats)
     {
         string URL = "http://localhost/api/players";
@@ -93,5 +87,15 @@ public class GameManager : MonoBehaviour
                 Debug.Log(request.downloadHandler.text);
             }
         }
+    }
+
+    private void RevertMusicVolume()
+    {
+        audioManager.IncreaseMusicVolumeGradually(musicVolume);
+    }
+
+    private void LoadGameOverScene()
+    {       
+        SceneManager.LoadScene("GameOver");
     }
 }

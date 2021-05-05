@@ -4,13 +4,14 @@ using System.Collections.Generic;
 [Serializable]
 public class LetterTyped
 {
+    //pressed letter with keypressed time
     public string Letter;
     public string Time;
 
     public LetterTyped(string time, string letter)
     {
-        this.Letter = letter;
-        this.Time = time;        
+        Letter = letter;
+        Time = time;        
     }
 
 }
@@ -18,28 +19,30 @@ public class LetterTyped
 [Serializable]
 public class WordTyped
 {
+    //typed word with sequence of keypresses with time of each keypress
     public string Word;
     public List<LetterTyped> Sequence;
 
     public WordTyped(string word, List<LetterTyped> sequence)
     {
-        this.Word = word;
-        this.Sequence = sequence;
+        Word = word;
+        Sequence = sequence;
     }
 }
 
 [Serializable]
 public class WordsTypedLog
 {
+    //list of all words typed with their sequences
     public List<WordTyped> typingSequences;
 
     public WordsTypedLog()
     {
-        this.typingSequences = new List<WordTyped>();
+        typingSequences = new List<WordTyped>();
     }
 
     public void addSequence(WordTyped wordTyped)
     {
-        this.typingSequences.Add(wordTyped);
+        typingSequences.Add(wordTyped);
     }
 }
