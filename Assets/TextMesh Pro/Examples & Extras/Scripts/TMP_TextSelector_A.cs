@@ -106,7 +106,7 @@ namespace TMPro.Examples
                 #endregion
 
 
-                #region Example of Word Selection
+                #region Example of TypedWord Selection
                 // Check if Mouse intersects any words and if so assign a random color to that word.
                 int wordIndex = TMP_TextUtilities.FindIntersectingWord(m_TextMeshPro, Input.mousePosition, Camera.main);
                 if (wordIndex != -1 && wordIndex != m_lastWordIndex)
@@ -118,7 +118,7 @@ namespace TMPro.Examples
                     Vector3 wordPOS = m_TextMeshPro.transform.TransformPoint(m_TextMeshPro.textInfo.characterInfo[wInfo.firstCharacterIndex].bottomLeft);
                     wordPOS = Camera.main.WorldToScreenPoint(wordPOS);
 
-                    //Debug.Log("Mouse Position: " + Input.mousePosition.ToString("f3") + "  Word Position: " + wordPOS.ToString("f3"));
+                    //Debug.Log("Mouse Position: " + Input.mousePosition.ToString("f3") + "  TypedWord Position: " + wordPOS.ToString("f3"));
 
                     Color32[] vertexColors = m_TextMeshPro.textInfo.meshInfo[0].colors32;
 

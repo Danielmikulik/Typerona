@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using TMPro;
 
+/// <summary>
+/// Movement and rotation of the virus particles.
+/// </summary>
 public class VirusMovement : MonoBehaviour
 {
     private const float defaultLength = 5;

@@ -1,5 +1,8 @@
 ﻿using UnityEngine;
 
+/// <summary>
+/// A script responsible for destroying particles after the time of their animation.
+/// </summary>
 public class ParticleDestroy : MonoBehaviour
 {
     [SerializeField] private ParticleSystem particles;

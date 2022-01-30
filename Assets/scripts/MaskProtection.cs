@@ -2,6 +2,9 @@
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// Face mask which grants protection against virus particles for given time.
+/// </summary>
 public class MaskProtection : MonoBehaviour
 {
 

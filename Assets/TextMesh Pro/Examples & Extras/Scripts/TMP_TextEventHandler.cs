@@ -141,7 +141,7 @@ namespace TMPro
                 #endregion
 
 
-                #region Example of Word Selection
+                #region Example of TypedWord Selection
                 // Check if Mouse intersects any words and if so assign a random color to that word.
                 int wordIndex = TMP_TextUtilities.FindIntersectingWord(m_TextComponent, Input.mousePosition, m_Camera);
                 if (wordIndex != -1 && wordIndex != m_lastWordIndex)

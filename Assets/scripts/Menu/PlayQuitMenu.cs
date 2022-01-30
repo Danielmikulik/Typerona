@@ -2,6 +2,9 @@
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+/// <summary>
+/// Management starting / restarting of the game.
+/// </summary>
 public class PlayQuitMenu : MonoBehaviour
 {
     [SerializeField] private Button play;
@@ -10,6 +13,9 @@ public class PlayQuitMenu : MonoBehaviour
         play.Select();
     }
 
+    /// <summary>
+    /// Starts a new game.
+    /// </summary>
     public void PlayGame()
     {
         if (SceneManager.GetActiveScene().name == "Menu") //checking if current scene is Menu or GameOver
@@ -23,6 +29,9 @@ public class PlayQuitMenu : MonoBehaviour
         
     }
 
+    /// <summary>
+    /// Exit the game.
+    /// </summary>
     public void QuitGame()
     {
         Debug.Log("quit");

@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// Defines behaviour of the About panel.
+/// </summary>
 public class About : MonoBehaviour
 {
     [SerializeField] private Scrollbar scrollBar;   //scrollBar of scrollArea

@@ -1,5 +1,8 @@
 ﻿using UnityEngine;
 
+/// <summary>
+/// Retrieving the user input from a keyboard.
+/// </summary>
 public class WordInput : MonoBehaviour
 {
     [SerializeField] private WordManager wordManager;

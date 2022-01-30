@@ -2,6 +2,7 @@
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
+
 public class ScrollRectEnsureVisible : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     //script to ensure dropdown is scrolling when browsing through options with arrow keys
@@ -11,11 +12,11 @@ public class ScrollRectEnsureVisible : MonoBehaviour, IPointerEnterHandler, IPoi
     private RectTransform selectedRectTransform;
     private GameObject lastSelected;
 
-    private bool _mouseHover;
+    private bool mouseHover;
 
-    Vector2 targetPos;
+    private Vector2 targetPos;
 
-    void Start()
+    private void Start()
     {
         scrollRectTransform = GetComponent<RectTransform>();
 
@@ -25,17 +26,21 @@ public class ScrollRectEnsureVisible : MonoBehaviour, IPointerEnterHandler, IPoi
         targetPos = contentPanel.anchoredPosition;
     }
 
-    void Update()
+    private void Update()
     {
-        if (!_mouseHover)
-            Autoscroll();
+        if (!mouseHover)
+            AutoScroll();
     }
 
-
-    public void Autoscroll()
+    /// <summary>
+    /// scrolling textArea with mouse wheel if mouse is hovering over it.
+    /// </summary>
+    public void AutoScroll()
     {
         if (contentPanel == null)
+        {
             contentPanel = GetComponent<ScrollRect>().content;
+        }
 
         GameObject selected = EventSystem.current.currentSelectedGameObject;
 
@@ -60,14 +65,14 @@ public class ScrollRectEnsureVisible : MonoBehaviour, IPointerEnterHandler, IPoi
         contentPanel.anchoredPosition = targetPos;
         lastSelected = selected;
     }
-   
+    
     public void OnPointerEnter(PointerEventData eventData)
     {
-        _mouseHover = true;
+        mouseHover = true;
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        _mouseHover = false;
+        mouseHover = false;
     }
 }

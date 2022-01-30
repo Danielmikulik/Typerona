@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// Defines behaviour of back button in options panel.
+/// </summary>
 public class OptionsBackButtonUI : MonoBehaviour
 {
     [SerializeField] private Button backButton;
@@ -11,7 +14,8 @@ public class OptionsBackButtonUI : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (resDropdown.Find("Dropdown List") == null && graphicsDropdown.Find("Dropdown List") == null) //if no dropdown is opened
+            //if no dropdown is opened. Otherwise, dropdown is closed.
+            if (resDropdown.Find("Dropdown List") == null && graphicsDropdown.Find("Dropdown List") == null) 
             {
                 backButton.onClick.Invoke();
             }

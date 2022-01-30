@@ -1,8 +1,10 @@
 ﻿using UnityEngine;
 
+/// <summary>
+/// Loader of last used settings.
+/// </summary>
 public class SettingsLoader : MonoBehaviour
 {
-
     private AudioManager audioManager;
 
     private void Start()
@@ -10,7 +12,10 @@ public class SettingsLoader : MonoBehaviour
         audioManager = AudioManager.Instance;
 
         //setting game to last used settings
-        QualitySettings.SetQualityLevel(PlayerPrefs.GetInt("quality"));
+        if (PlayerPrefs.HasKey("quality"))
+        {
+            QualitySettings.SetQualityLevel(PlayerPrefs.GetInt("quality"));
+        }     
         Screen.fullScreen = (PlayerPrefs.GetInt("fullscreen") == 1);
         if (PlayerPrefs.HasKey("resolution"))
         {

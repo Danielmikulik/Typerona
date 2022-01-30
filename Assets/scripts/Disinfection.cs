@@ -1,12 +1,21 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Describes behaviour of disinfection.
+/// </summary>
 public class Disinfection : MonoBehaviour
 {
     [SerializeField] private ParticleSystem particles;
 
+    /// <summary>
+    /// Particles from the disinfection bottle.
+    /// </summary>
     public ParticleSystem Particles { get => particles; set => particles = value; }
 
+    /// <summary>
+    /// Destroying all viruses on screen with sound effect.
+    /// </summary>
     public void DestroyAllViruses()
     {
         StartCoroutine(Disinfect());  

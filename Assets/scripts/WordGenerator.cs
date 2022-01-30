@@ -2,10 +2,16 @@
 using System.Linq;
 using UnityEngine;
 
+/// <summary>
+/// Generator of the words used in game.
+/// </summary>
 public class WordGenerator
 {
-    private static string[] wordList = SetWordList();   //list of words used in game
+    private static readonly string[] wordList = SetWordList();   //list of words used in game
 
+    /// <summary>
+    /// </summary>
+    /// <returns>A random word from the word list</returns>
     public static string GetRandomWord()
 	{
 		int randomIndex = Random.Range(0, wordList.Length);

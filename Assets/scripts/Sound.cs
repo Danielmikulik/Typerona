@@ -1,6 +1,8 @@
-﻿using UnityEngine.Audio;
-using UnityEngine;
+﻿using UnityEngine;
 
+/// <summary>
+/// Data class to store information about sound.
+/// </summary>
 [System.Serializable]
 public class Sound {
 

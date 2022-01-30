@@ -17,7 +17,7 @@ namespace TMPro.Examples
         private RectTransform m_TextPopup_RectTransform;
         private TextMeshProUGUI m_TextPopup_TMPComponent;
         private const string k_LinkText = "You have selected link <#ffff00>";
-        private const string k_WordText = "Word Index: <#ffff00>";
+        private const string k_WordText = "TypedWord Index: <#ffff00>";
 
 
         private TextMeshProUGUI m_TextMeshPro;
@@ -164,7 +164,7 @@ namespace TMPro.Examples
                 #endregion
 
 
-                #region Word Selection Handling
+                #region TypedWord Selection Handling
                 //Check if Mouse intersects any words and if so assign a random color to that word.
                 int wordIndex = TMP_TextUtilities.FindIntersectingWord(m_TextMeshPro, Input.mousePosition, m_Camera);
 
@@ -202,7 +202,7 @@ namespace TMPro.Examples
                 }
 
 
-                // Word Selection Handling
+                // TypedWord Selection Handling
                 if (wordIndex != -1 && wordIndex != m_selectedWord && !(Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)))
                 {
                     m_selectedWord = wordIndex;
@@ -333,7 +333,7 @@ namespace TMPro.Examples
             #endregion
 
 
-            #region Word Selection Handling
+            #region TypedWord Selection Handling
             //Check if Mouse intersects any words and if so assign a random color to that word.
             /*
             int wordIndex = TMP_TextUtilities.FindIntersectingWord(m_TextMeshPro, Input.mousePosition, m_Camera);

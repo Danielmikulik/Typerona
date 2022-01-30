@@ -96,7 +96,7 @@ namespace TMPro.Examples
         /// <summary>
         /// Method to draw a rectangle around each character.
         /// </summary>
-        /// <param name="text"></param>
+        /// <param player="text"></param>
         void DrawCharactersBounds()
         {
             int characterCount = m_TextInfo.characterCount;
@@ -256,7 +256,7 @@ namespace TMPro.Examples
         /// <summary>
         /// Method to draw rectangles around each word of the text.
         /// </summary>
-        /// <param name="text"></param>
+        /// <param player="text"></param>
         void DrawWordBounds()
         {
             for (int i = 0; i < m_TextInfo.wordCount; i++)
@@ -297,9 +297,9 @@ namespace TMPro.Examples
                         bottomLeft = new Vector3(currentCharInfo.bottomLeft.x, currentCharInfo.descender, 0);
                         topLeft = new Vector3(currentCharInfo.bottomLeft.x, currentCharInfo.ascender, 0);
 
-                        //Debug.Log("Start Word Region at [" + currentCharInfo.character + "]");
+                        //Debug.Log("Start TypedWord Region at [" + currentCharInfo.character + "]");
 
-                        // If Word is one character
+                        // If TypedWord is one character
                         if (wInfo.characterCount == 1)
                         {
                             isBeginRegion = false;
@@ -312,11 +312,11 @@ namespace TMPro.Examples
                             // Draw Region
                             DrawRectangle(bottomLeft, topLeft, topRight, bottomRight, wordColor);
 
-                            //Debug.Log("End Word Region at [" + currentCharInfo.character + "]");
+                            //Debug.Log("End TypedWord Region at [" + currentCharInfo.character + "]");
                         }
                     }
 
-                    // Last Character of Word
+                    // Last Character of TypedWord
                     if (isBeginRegion && j == wInfo.characterCount - 1)
                     {
                         isBeginRegion = false;
@@ -329,9 +329,9 @@ namespace TMPro.Examples
                         // Draw Region
                         DrawRectangle(bottomLeft, topLeft, topRight, bottomRight, wordColor);
 
-                        //Debug.Log("End Word Region at [" + currentCharInfo.character + "]");
+                        //Debug.Log("End TypedWord Region at [" + currentCharInfo.character + "]");
                     }
-                    // If Word is split on more than one line.
+                    // If TypedWord is split on more than one line.
                     else if (isBeginRegion && currentLine != m_TextInfo.characterInfo[characterIndex + 1].lineNumber)
                     {
                         isBeginRegion = false;
@@ -343,7 +343,7 @@ namespace TMPro.Examples
 
                         // Draw Region
                         DrawRectangle(bottomLeft, topLeft, topRight, bottomRight, wordColor);
-                        //Debug.Log("End Word Region at [" + currentCharInfo.character + "]");
+                        //Debug.Log("End TypedWord Region at [" + currentCharInfo.character + "]");
                         maxAscender = -Mathf.Infinity;
                         minDescender = Mathf.Infinity;
 
@@ -360,7 +360,7 @@ namespace TMPro.Examples
         /// <summary>
         /// Draw rectangle around each of the links contained in the text.
         /// </summary>
-        /// <param name="text"></param>
+        /// <param player="text"></param>
         void DrawLinkBounds()
         {
             TMP_TextInfo textInfo = m_TextComponent.textInfo;
@@ -403,7 +403,7 @@ namespace TMPro.Examples
                         bottomLeft = new Vector3(currentCharInfo.bottomLeft.x, currentCharInfo.descender, 0);
                         topLeft = new Vector3(currentCharInfo.bottomLeft.x, currentCharInfo.ascender, 0);
 
-                        //Debug.Log("Start Word Region at [" + currentCharInfo.character + "]");
+                        //Debug.Log("Start TypedWord Region at [" + currentCharInfo.character + "]");
 
                         // If Link is one character
                         if (linkInfo.linkTextLength == 1)
@@ -418,7 +418,7 @@ namespace TMPro.Examples
                             // Draw Region
                             DrawRectangle(bottomLeft, topLeft, topRight, bottomRight, linkColor);
 
-                            //Debug.Log("End Word Region at [" + currentCharInfo.character + "]");
+                            //Debug.Log("End TypedWord Region at [" + currentCharInfo.character + "]");
                         }
                     }
 
@@ -435,7 +435,7 @@ namespace TMPro.Examples
                         // Draw Region
                         DrawRectangle(bottomLeft, topLeft, topRight, bottomRight, linkColor);
 
-                        //Debug.Log("End Word Region at [" + currentCharInfo.character + "]");
+                        //Debug.Log("End TypedWord Region at [" + currentCharInfo.character + "]");
                     }
                     // If Link is split on more than one line.
                     else if (isBeginRegion && currentLine != textInfo.characterInfo[characterIndex + 1].lineNumber)
@@ -452,7 +452,7 @@ namespace TMPro.Examples
 
                         maxAscender = -Mathf.Infinity;
                         minDescender = Mathf.Infinity;
-                        //Debug.Log("End Word Region at [" + currentCharInfo.character + "]");
+                        //Debug.Log("End TypedWord Region at [" + currentCharInfo.character + "]");
                     }
                 }
 
@@ -464,7 +464,7 @@ namespace TMPro.Examples
         /// <summary>
         /// Draw Rectangles around each lines of the text.
         /// </summary>
-        /// <param name="text"></param>
+        /// <param player="text"></param>
         void DrawLineBounds()
         {
             int lineCount = m_TextInfo.lineCount;

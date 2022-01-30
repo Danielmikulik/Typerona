@@ -2,33 +2,55 @@
 using TMPro;
 using UnityEngine;
 
+/// <summary>
+/// Management of all the words on the scene.
+/// </summary>
 public class WordManager : MonoBehaviour
 {
-    [SerializeField] private List<Word> wordList;           //list of words on the scene
+    [SerializeField] 
+    private List<Word> wordList;           //list of words on the scene
 
-    [SerializeField] private WordSpawner wordSpawner;
-    [SerializeField] private TextMeshProUGUI scoreText;
-    [SerializeField] private TextMeshProUGUI MultiplierText;
-    [SerializeField] private GameObject maskPrefab;
-    [SerializeField] private GameObject disinfectionPrefab;
+    [SerializeField] 
+    private WordSpawner wordSpawner;
+    [SerializeField] 
+    private TextMeshProUGUI scoreText;
+    [SerializeField] 
+    private TextMeshProUGUI MultiplierText;
+    [SerializeField] 
+    private GameObject maskPrefab;
+    [SerializeField] 
+    private GameObject disinfectionPrefab;
 
     private AudioManager audioManager;
     private WordsTypedLog wordTypingSequences = new WordsTypedLog();   //type sequences of all typed words
 
     private int typedWords = 0;
     private int withoutMistkeStreak = 0;
-    private int multiplier = 1;     //score multiplier for word typing
-    [SerializeField] private float maskRate = 0.03f;            //chance to spawn mask
-    [SerializeField] private float disinfectionRate = 0.02f;    //chance to spawn disinfection
+    private int multiplier = 1;                 //score multiplier for word typing
+    [SerializeField] 
+    private float maskRate = 0.03f;             //chance to spawn mask
+    [SerializeField] 
+    private float disinfectionRate = 0.02f;     //chance to spawn disinfection
     
-    private bool hasMistake;              //word being typed has a mistake
+    private bool hasMistake;                    //word being typed has a mistake
     private bool hasActiveWord;
     private List<Word> activeWords = new List<Word>();      //list of words that start with same letter sequence as the one being typed
 
-    //palyer stats
+    /// <summary>
+    /// Player name
+    /// </summary>
     public string Name { get; private set; }
+    /// <summary>
+    /// Score reached in game.
+    /// </summary>
     public static int Score { get; private set; }
+    /// <summary>
+    /// Count of mistakes made while typing
+    /// </summary>
     public static int MistakeCount { get; private set; }
+    /// <summary>
+    /// Speed of typing expressed in Words Per Minute.
+    /// </summary>
     public static float WPM { get; private set; }
 
     private void Start()
@@ -37,10 +59,13 @@ public class WordManager : MonoBehaviour
         audioManager = AudioManager.Instance;
     }
 
+    /// <summary>
+    /// Creates a new virus particle with random word which is unique on the scene.
+    /// </summary>
     public void AddWord()
     {
         string generatedWord;
-        bool duplicate;       //true if list of words already contains the generated word
+        bool duplicate;         //true if list of words already contains the generated word
         do
         {
             duplicate = false;
@@ -72,6 +97,9 @@ public class WordManager : MonoBehaviour
         wordList.Add(word);
     }
 
+    /// <summary>
+    /// Removes all words.
+    /// </summary>
     public void ClearWordList()
     {
         if (hasActiveWord)
@@ -82,6 +110,13 @@ public class WordManager : MonoBehaviour
         wordList.Clear();
     }
 
+    /// <summary>
+    /// If no word is active, activates a word starting with the letter typed. If more words start with the same sequence,
+    /// all are highlighted until a unique word can be determined.
+    /// If word is active, types a letter and colors it (red/green) and plays sound of keypress / missType.
+    /// If it is the last letter of the word, the word is typed and destroyed.
+    /// </summary>
+    /// <param name="letter">Input from user</param>
     public void TypeLetter(char letter)
     {
         if (hasActiveWord)
@@ -128,7 +163,7 @@ public class WordManager : MonoBehaviour
 
                 if (typingSequence != null)     //word is typed
                 {
-                    wordTypingSequences.addSequence(typingSequence);
+                    wordTypingSequences.AddSequence(typingSequence);
                     DeleteWord(i);
                     typedWords++;
                     if (!hasMistake)
@@ -162,6 +197,10 @@ public class WordManager : MonoBehaviour
         }            
     }
 
+    /// <summary>
+    /// Cancels selection of the word, so that new word can be started to type.
+    /// Changes the color of the word to default.
+    /// </summary>
     public void CancelWordSelection()
     {
         if (hasActiveWord)
@@ -176,6 +215,9 @@ public class WordManager : MonoBehaviour
         }        
     }
 
+    /// <summary>
+    /// Delete last typed letter and change it's color to default.
+    /// </summary>
     public void DeleteLetter()
     {
         if (hasActiveWord)
@@ -193,6 +235,10 @@ public class WordManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Removes words whose virus particles were destroyed by mask. If it was an only selected word, it is unselected before removing.
+    /// </summary>
+    /// <param name="wordToRemove"></param>
     public void RemoveWordDesrtoyedByMask(string wordToRemove)
     {
         Word deadWord = null;
@@ -209,7 +255,7 @@ public class WordManager : MonoBehaviour
         {
             if (activeWords.Contains(deadWord))
             {
-                if (activeWords.Count == 1)
+                if (activeWords.Count == 1) //if the only typed word is destroyed by mask.
                 {
                     CancelWordSelection();
                 }
@@ -222,14 +268,16 @@ public class WordManager : MonoBehaviour
         }
     }
 
-    internal void WriteStats()
+    /// <summary>
+    /// Writes stats of the game to be posted to server.
+    /// </summary>
+    public void WriteStats()
     {
         WPM = typedWords / (Time.time / 60);
-        Player playerStats = new Player(Name, Score, MistakeCount, WPM, wordTypingSequences);
-        FindObjectOfType<GameManager>().PostStats(playerStats);
+        Game gameStats = new Game(Name, Score, MistakeCount, WPM, wordTypingSequences.TypingSequences);
+        FindObjectOfType<GameManager>().PostStats(gameStats);
     }
- 
-
+    
     private void MistakeMade()
     {
         MistakeCount++;
@@ -265,8 +313,6 @@ public class WordManager : MonoBehaviour
                 break;
             case WordType.Disinfection:         
                 StartCoroutine(Disinfect());
-                break;
-            default:
                 break;
         }
 

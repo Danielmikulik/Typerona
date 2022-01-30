@@ -1,6 +1,9 @@
 ﻿using TMPro;
 using UnityEngine;
 
+/// <summary>
+/// Shows table of top 10 players.
+/// </summary>
 public class HighScoreTable : MonoBehaviour
 {
     [SerializeField] private GameObject tableHeader;
@@ -9,11 +12,11 @@ public class HighScoreTable : MonoBehaviour
 
     private HighScoreLoader loader;
 
-    public void OnEnable()
+    private void OnEnable()
     {
         loader = FindObjectOfType<HighScoreLoader>();
         
-        PlayerData highScores = loader.PlayerData;
+        GameData highScores = loader.GameData;
 
         if (highScores is null) //data not loaded
         {
@@ -28,19 +31,29 @@ public class HighScoreTable : MonoBehaviour
         ShowHighScores(highScores);
     }
 
+    /// <summary>
+    /// shows loading data message.
+    /// </summary>
     public void ShowLoading()
     {
         tableHeader.SetActive(false);
         loading.SetActive(true);
     }
 
+    /// <summary>
+    /// Shows loading error message.
+    /// </summary>
     public void ShowLoadingError()
     {
         loadingError.SetActive(true);
         loading.SetActive(false);
     }
 
-    public void ShowHighScores(PlayerData highScores)
+    /// <summary>
+    /// Shows a table of top 10 players. If data can't be loaded, error message is shown.
+    /// </summary>
+    /// <param name="highScores">top 10 players</param>
+    public void ShowHighScores(GameData highScores)
     {
         if (loading.activeSelf)
         {
@@ -60,7 +73,7 @@ public class HighScoreTable : MonoBehaviour
 
         float templateHeight = 28f;     //vertical space between entries
         int index = 0;
-        foreach (Player player in highScores.players)
+        foreach (Game player in highScores.games)
         {
             if (index >= 10)
             {
@@ -72,10 +85,10 @@ public class HighScoreTable : MonoBehaviour
             entryRectTransform.anchoredPosition = new Vector2(0, -templateHeight * index++);    //moving the entry transform down
 
             entryTransform.Find("posText").GetComponent<TextMeshProUGUI>().text = index.ToString();
-            entryTransform.Find("nameText").GetComponent<TextMeshProUGUI>().text = player.name;
+            entryTransform.Find("nameText").GetComponent<TextMeshProUGUI>().text = player.player;
             entryTransform.Find("scoreText").GetComponent<TextMeshProUGUI>().text = player.score.ToString();
             entryTransform.Find("mistakesText").GetComponent<TextMeshProUGUI>().text = player.mistakes.ToString();
-            entryTransform.Find("WPMText").GetComponent<TextMeshProUGUI>().text = player.WPM.ToString();
+            entryTransform.Find("WPMText").GetComponent<TextMeshProUGUI>().text = player.wpm.ToString();
             entryTransform.gameObject.SetActive(true);
         }
     }

@@ -1,11 +1,14 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// Defines behaviour of backButton.
+/// </summary>
 public class BackButtonUI : MonoBehaviour
 {
     [SerializeField] private Button backButton;
 
-    void Update()
+    private void Update()
     {
         //press BackButton on ESC keypress
         if (Input.GetKeyDown(KeyCode.Escape))

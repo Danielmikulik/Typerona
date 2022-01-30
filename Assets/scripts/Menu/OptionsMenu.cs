@@ -3,6 +3,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
+/// <summary>
+/// Managing of options in the options panel.
+/// </summary>
 public class OptionsMenu : MonoBehaviour
 {
     [SerializeField] private Slider musicVolumeSlider;
@@ -19,14 +22,12 @@ public class OptionsMenu : MonoBehaviour
         audioManager = AudioManager.Instance; 
 
         //making UI match the last used settings
-        QualitySettings.SetQualityLevel(PlayerPrefs.GetInt("quality"));
         qualityDropdown.value = PlayerPrefs.HasKey("quality") ? PlayerPrefs.GetInt("quality") : QualitySettings.GetQualityLevel();       
 
         fullscreen.isOn = (PlayerPrefs.GetInt("fullscreen") == 1);
         Screen.fullScreen = fullscreen.isOn;
         
         resolutions = Screen.resolutions;
-        resolutionDropdown.ClearOptions();
 
         List<string> options = new List<string>();
 
@@ -54,13 +55,11 @@ public class OptionsMenu : MonoBehaviour
         if (PlayerPrefs.HasKey("musicVolume"))
         {
             musicVolumeSlider.value = PlayerPrefs.GetFloat("musicVolume");
-            SetMusicVolume(musicVolumeSlider.value);
         }
 
         if (PlayerPrefs.HasKey("SFXVolume"))
         {
             SFXVolumeSlider.value = PlayerPrefs.GetFloat("SFXVolume");
-            SetSFXVolume(SFXVolumeSlider.value);
         }
     }
 
@@ -69,30 +68,50 @@ public class OptionsMenu : MonoBehaviour
         musicVolumeSlider.Select();
     }
 
+    /// <summary>
+    /// Change of music volume. Method is called when music volume slider value is changed.
+    /// </summary>
+    /// <param name="volume">Value from slider</param>
     public void SetMusicVolume(float volume)
     {
         audioManager.ChangeMusicVolume(volume);
         PlayerPrefs.SetFloat("musicVolume", volume);
     }
 
+    /// <summary>
+    /// Change of SFX volume. Method is called when SFX volume slider value is changed.
+    /// </summary>
+    /// <param name="volume">Value from slider</param>
     public void SetSFXVolume(float volume)
     {
         audioManager.ChangeSFXVolume(volume);
         PlayerPrefs.SetFloat("SFXVolume", volume);
     }
 
+    /// <summary>
+    /// Change of quality settings. Method is called when quality settings are changed.
+    /// </summary>
+    /// <param name="qualityIndex">Index of quality settings in dropdown menu.</param>
     public void SetQuality(int qualityIndex)
     {
         QualitySettings.SetQualityLevel(qualityIndex);
         PlayerPrefs.SetInt("quality", qualityIndex);
     }
 
+    /// <summary>
+    /// Change of fullscreen mode. Method is called when fullscreen mode is changed.
+    /// </summary>
+    /// <param name="isFullscreen">boolean value of fullscreen toggle.</param>
     public void SetFullscreen(bool isFullscreen)
     {
         Screen.fullScreen = isFullscreen;
         PlayerPrefs.SetInt("fullscreen", isFullscreen ? 1 : 0);
     }
 
+    /// <summary>
+    /// Change of screen resolution. Method is called when resolution is changed.
+    /// </summary>
+    /// <param name="resolutionIndex">Index of resolution in dropdown menu.</param>
     public void SetResolution(int resolutionIndex)
     {
         Resolution resolution = resolutions[resolutionIndex];

@@ -2,6 +2,9 @@
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// Defines behaviour of the input field.
+/// </summary>
 public class NameInput : MonoBehaviour
 {
     [SerializeField] private GameObject mainMenu;
@@ -9,13 +12,16 @@ public class NameInput : MonoBehaviour
     [SerializeField] private TMP_InputField nameInputField;
     [SerializeField] private Button play;
 
+    /// <summary>
+    /// Player name
+    /// </summary>
     public static string Name { get; private set; }
 
     void Start()
     {
         nameInputField.Select();
-        nameInputField.text = PlayerPrefs.GetString("name", Name);  //prefilling name input field
-        nameInputField.caretPosition = nameInputField.text.Length;  //setting carret (cursor) to the end of name
+        nameInputField.text = PlayerPrefs.GetString("player", Name);  //pre-filling player input field
+        nameInputField.caretPosition = nameInputField.text.Length;  //setting caret (cursor) to the end of player
         play.onClick.AddListener(OnPlayButtonClickHandler);
     }
 
@@ -27,7 +33,7 @@ public class NameInput : MonoBehaviour
         }
 
         Name = nameInputField.text;
-        PlayerPrefs.SetString("name", Name);
+        PlayerPrefs.SetString("player", Name);
         insertMenu.SetActive(false);
         mainMenu.SetActive(true);                  
     }

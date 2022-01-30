@@ -1,5 +1,8 @@
 ﻿using UnityEngine;
 
+/// <summary>
+/// Timer used to spawn new virus particles.
+/// </summary>
 public class Timer : MonoBehaviour
 {
     [SerializeField] private WordManager wordManager;
@@ -7,7 +10,8 @@ public class Timer : MonoBehaviour
     [SerializeField] private float wordDelay = 2.5f;    //delay between virus spawns
 
     private int proCount = 30;
-    private float nextWordTime = 0.1f;
+    private float nextWordTime = 0f;
+
     // Update is called once per frame
     private void Update()
     {

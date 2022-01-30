@@ -6,8 +6,13 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    //Ak nastane chyba pri odosielaní dát na konci hry
+    /// <summary>
+    /// Error message shown after game over in case of unsuccessful post method.
+    /// </summary>
     public static bool UploadError { get; private set; }
+    /// <summary>
+    /// Time of the start of the game.
+    /// </summary>
     public static DateTime StartTime { get; private set; }
 
 
@@ -16,7 +21,7 @@ public class GameManager : MonoBehaviour
 
     private bool gameEnded = false;
     private float musicVolume;
-    private readonly float dampenedMusicVolume = 0.08f;
+    private const float dampenedMusicVolume = 0.08f;
     private AudioManager audioManager;
 
     private void Start()
@@ -30,6 +35,9 @@ public class GameManager : MonoBehaviour
         PlayerPrefs.Save();
     }
 
+    /// <summary>
+    /// Shows game over panel, decreases music volume, plays sound and then increases music volume back.
+    /// </summary>
     public void EndGame()
     {
         if (!gameEnded)
@@ -60,12 +68,16 @@ public class GameManager : MonoBehaviour
         }       
     }
 
-    public void PostStats(Player playerStats) => StartCoroutine(PostData_Coroutine(playerStats));
+    /// <summary>
+    /// Calls Post method on REST API to send game data to server.
+    /// </summary>
+    /// <param name="gameStats"></param>
+    public void PostStats(Game gameStats) => StartCoroutine(PostData_Coroutine(gameStats));
  
-    private IEnumerator PostData_Coroutine(Player playerStats)
+    private IEnumerator PostData_Coroutine(Game gameStats)
     {
-        string URL = "http://localhost/api/players";
-        string jsonData = JsonUtility.ToJson(playerStats, true);
+        string URL = "https://localhost:5001/api/Typerona";
+        string jsonData = JsonUtility.ToJson(gameStats, true);
 
         Debug.Log(jsonData);
     
