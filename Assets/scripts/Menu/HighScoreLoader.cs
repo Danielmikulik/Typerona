@@ -1,6 +1,5 @@
-﻿using System.Collections;
+﻿using System.Net.Http;
 using UnityEngine;
-using UnityEngine.Networking;
 
 /// <summary>
 /// Loading data from server.
@@ -24,37 +23,33 @@ public class HighScoreLoader : MonoBehaviour
     /// <summary>
     /// Loading data from server and shows them in table.
     /// </summary>
-    public void GetHighScores()
-    {
-        StartCoroutine(GetData());
-    }
-
-    private IEnumerator GetData()
+    public async void GetHighScores()
     {
         Debug.Log("Processing data, Please wait...");
 
-        using (UnityWebRequest webRequest = UnityWebRequest.Get(URL))
+        using (HttpClient client = new HttpClient())
         {
             table.ShowLoading();
-            yield return webRequest.SendWebRequest();
+            try
+            {
+                var response = await client.GetAsync(URL);
+                var content = await response.Content.ReadAsStringAsync();
 
-            string json = "{ \"games\" : " + webRequest.downloadHandler.text + "}";   //adding attribute type to downloaded array json for JsonUtility class to deserialize it
-            if (webRequest.isHttpError || webRequest.isNetworkError)
-            {
-                Debug.Log(webRequest.error);
-                table.ShowLoadingError();
-            }
-            else
-            {
+                string json = "{ \"games\" : " + content + "}";   //adding attribute type to downloaded array json for JsonUtility class to deserialize it
                 Debug.Log(json);
                 ProcessData(json);
             }
-        }  
+            catch (HttpRequestException e)
+            {
+                Debug.Log(e);
+                table.ShowLoadingError();
+            }
+        }
     }
 
-    private void ProcessData(string json) 
+    private void ProcessData(string json)
     {
         GameData = JsonUtility.FromJson<GameData>(json);
         table.ShowHighScores(GameData);
-    }    
+    }
 }

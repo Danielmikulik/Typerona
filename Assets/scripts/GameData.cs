@@ -25,11 +25,11 @@ public class Game
     /// <summary>
     /// Creates new game data storage.
     /// </summary>
-    /// <param name="player"></param>
-    /// <param name="score"></param>
-    /// <param name="mistakes"></param>
-    /// <param name="wpm"></param>
-    /// <param name="words"></param>
+    /// <param name="player">Player name</param>
+    /// <param name="score">Reached score</param>
+    /// <param name="mistakes">Count of mistakes</param>
+    /// <param name="wpm">Typing speed (Words Per Minute)</param>
+    /// <param name="words">Typed words</param>
     public Game(string player, int score, int mistakes, float wpm, List<WordTyped> words)
     {
         this.player = player ?? "GUEST";

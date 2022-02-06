@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Collections;
+using System.Net.Http;
+using System.Text;
 using UnityEngine;
-using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour
     /// <summary>
     /// Error message shown after game over in case of unsuccessful post method.
     /// </summary>
-    public static bool UploadError { get; private set; }
+    public static bool UploadError { get; set; }
     /// <summary>
     /// Time of the start of the game.
     /// </summary>
@@ -72,31 +72,26 @@ public class GameManager : MonoBehaviour
     /// Calls Post method on REST API to send game data to server.
     /// </summary>
     /// <param name="gameStats"></param>
-    public void PostStats(Game gameStats) => StartCoroutine(PostData_Coroutine(gameStats));
- 
-    private IEnumerator PostData_Coroutine(Game gameStats)
+    public async void PostData(Game gameStats)
     {
         string URL = "https://localhost:5001/api/Typerona";
         string jsonData = JsonUtility.ToJson(gameStats, true);
 
         Debug.Log(jsonData);
-    
-        using (UnityWebRequest request = UnityWebRequest.Post(URL, jsonData))
+
+        using (HttpClient request = new HttpClient())
         {
-            byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes(jsonData);
-            request.uploadHandler = (UploadHandler)new UploadHandlerRaw(jsonToSend);            
-            request.SetRequestHeader("Content-Type", "application/json");
-            Debug.Log("Uploading stats...");
-            yield return request.SendWebRequest();
-            Debug.Log("Data sent");
-            if (request.isNetworkError || request.isHttpError)
+            try
+            {
+                var response = await request.PostAsync(URL, new StringContent(jsonData, Encoding.UTF8, "application/json"));
+                var content = await response.Content.ReadAsStringAsync();
+                Debug.Log("Data sent");
+                Debug.Log(content);
+            }
+            catch (HttpRequestException e)
             {
                 UploadError = true;
-                Debug.Log(request.error);
-            }
-            else
-            {
-                Debug.Log(request.downloadHandler.text);
+                Debug.Log(e);
             }
         }
     }

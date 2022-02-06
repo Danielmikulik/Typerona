@@ -275,7 +275,7 @@ public class WordManager : MonoBehaviour
     {
         WPM = typedWords / (Time.time / 60);
         Game gameStats = new Game(Name, Score, MistakeCount, WPM, wordTypingSequences.TypingSequences);
-        FindObjectOfType<GameManager>().PostStats(gameStats);
+        FindObjectOfType<GameManager>().PostData(gameStats);
     }
     
     private void MistakeMade()

@@ -18,6 +18,7 @@ public class PlayQuitMenu : MonoBehaviour
     /// </summary>
     public void PlayGame()
     {
+        GameManager.UploadError = false;
         if (SceneManager.GetActiveScene().name == "Menu") //checking if current scene is Menu or GameOver
         {
             SceneManager.LoadScene("Endless");
